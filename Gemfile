@@ -32,6 +32,8 @@ gem 'whenever', :require => false
 gem "slack-notifier"
 gem 'bcrypt'
 
+gem 'telegram-bot'
+
 group :test do
   gem 'rspec-rails', '~> 3.5.2'
   gem 'factory_girl_rails', '~> 4.8.0'
