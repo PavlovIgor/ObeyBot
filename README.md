@@ -1,5 +1,7 @@
 Set variables:
 
+0 - config/application.yml create/edit file
+
 1 - config/database.yml production section
 
 2 - config/deploy.rb set server, repo, app name, user
