@@ -86,9 +86,9 @@ Rails.application.configure do
     config.logger    = ActiveSupport::TaggedLogging.new(logger)
   end
 
-  # Route for telegram_bot
-  routes.default_url_options[:host] = Figaro.env.app_host
-
   # Do not dump schema after migrations.
   config.active_record.dump_schema_after_migration = false
+
+  # Route for telegram_bot
+  routes.default_url_options = {host: Figaro.env.app_host, protocol: 'https'}
 end
