@@ -86,7 +86,9 @@ Rails.application.configure do
     config.logger    = ActiveSupport::TaggedLogging.new(logger)
   end
 
+  config.after_initialize do
+    Rails.application.routes.default_url_options[:host] = Figaro.env.app_host
+  end
   # Do not dump schema after migrations.
   config.active_record.dump_schema_after_migration = false
-  config.routes.default_url_options = {host: Figaro.env.app_host, protocol: 'https'}
 end
