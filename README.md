@@ -16,6 +16,8 @@ Set variables:
 
 8 - config/provision/playbook.yml set app_name
 
+9 - app/views/layouts/application.html.erb - set titile
+
 
 Up dev environment:
 
