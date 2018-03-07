@@ -8,8 +8,8 @@ Up dev environment:
 
 3 - Start daemon - docker-compose up
 
-4 - Create database - docker-compose run webapp rake db:create
+4 - Create database - docker-compose exec webapp rake db:create
 
-5 - Migrations - docker-compose run webapp rake db:migrate
+5 - Migrations - docker-compose exec webapp rake db:migrate
 
-6 - Seed - docker-compose run webapp rake db:seed
+6 - Seed - docker-compose exec webapp rake db:seed
