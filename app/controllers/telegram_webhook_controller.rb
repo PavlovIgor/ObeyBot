@@ -5,7 +5,7 @@ class TelegramWebhookController < Telegram::Bot::UpdatesController
   end
 
   def start(*)
-    respond_with :message, text: from
+    respond_with :message, text: ObeyBotFacade::start(from) if from
   end
 
 

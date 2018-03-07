@@ -1,6 +1,7 @@
 class ObeyBotFacade
 
-  def self.welcome_text(data)
+  def self.start(data)
+    User.create(UserSaveAdapter.adapt(data))
     "Привет #{responce_appeal(data)}!\r\nРаскажи немного о себе. Сколько тебе лет?"
   end
 
