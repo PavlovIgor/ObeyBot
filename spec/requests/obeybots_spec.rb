@@ -20,7 +20,6 @@ RSpec.describe TelegramWebhookController, :telegram_bot do
     describe 'User with first_name and last_name' do
       let(:from){ test_data }
       it { should respond_with_message 'Привет Igor Pavlov!'+welcome_text }
-      it { expect(User.count).to eq(1) }
     end
 
     describe 'User without first_name' do
