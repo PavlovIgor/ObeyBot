@@ -9,7 +9,7 @@ RSpec.describe TelegramWebhookController, :telegram_bot do
     let(:first_name) { "Igor" }
     let(:last_name) { "Pavlov" }
     let(:username) { "username" }
-    let(:welcome_text) { "%2FРаскажи немного о себе. Сколько тебе лет?" }
+    let(:welcome_text) { "\r\nРаскажи немного о себе. Сколько тебе лет?" }
     let(:test_data) {{
           id: from_id,
           username: username,
