@@ -20,6 +20,6 @@ module RealEstateAuctions
     config.i18n.default_locale = :en
     config.exceptions_app = self.routes
 
-    config.assets.precompile += ['active_admin.css', 'active_admin/print.css', 'active_admin.js']
+    config.assets.precompile += ['active_admin.scss', 'active_admin/print.css', 'active_admin.js']
   end
 end
