@@ -23,7 +23,7 @@ class TelegramWebhookController < Telegram::Bot::UpdatesController
 
   def callback_query(data)
     if data == 'Муж' or data == "Жен"
-      answer_callback_query 'cool', show_alert: true
+      answer_callback_query 'cool'
     else
       answer_callback_query 'er'
     end
