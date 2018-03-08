@@ -23,7 +23,7 @@ class TelegramWebhookController < Telegram::Bot::UpdatesController
 
   def callback_query(data)
     if data == 'Муж' or data == "Жен"
-      respond_with :message, text: ObeyBotFacade::set_gender(gender), reply_markup: ObeyBot.skills_keyboard
+      answer_inline_query 'cool'
     else
       answer_callback_query 'er'
     end
