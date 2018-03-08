@@ -14,10 +14,12 @@ class ObeyBot
 
   def self.gender_keyboard
     {
-        keyboard: ['m', 'w'],
-        resize_keyboard: true,
-        one_time_keyboard: true,
-        selective: true,
+      inline_keyboard: [
+        [
+          {text: 'Муж', callback_data: 'Муж'},
+          {text: 'Жен', callback_data: 'Жен'},
+        ]
+      ],
     }
   end
 
