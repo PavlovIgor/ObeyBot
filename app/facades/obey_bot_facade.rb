@@ -5,14 +5,14 @@ class ObeyBotFacade
     ObeyBot.say_welcome(data)
   end
 
-  def self.set_age(words)
+  def self.age_answer(words)
     User.update(age: words[0])
-    ObeyBot.say_age(words)
+    ObeyBot.age_answer
   end
 
-  def self.set_gender(value)
+  def self.gender_answer(value)
     User.update(gender: value)
-    ObeyBot.say_gender
+    ObeyBot.gender_answer
   end
 
 end

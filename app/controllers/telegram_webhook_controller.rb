@@ -1,6 +1,5 @@
 class TelegramWebhookController < Telegram::Bot::UpdatesController
   include Telegram::Bot::UpdatesController::MessageContext
-  include Telegram::Bot::UpdatesController::CallbackQueryContext
   context_to_action!
 
   # def message(message)
@@ -9,36 +8,28 @@ class TelegramWebhookController < Telegram::Bot::UpdatesController
 
   def start(*)
     save_context :age
-    respond_with :message, text: ObeyBotFacade::start(from)
-    respond_with :message, text: ObeyBot::age_question
+    respond_with :message, text: ObeyBotFacade.start(from)
+    respond_with :message, text: ObeyBot.age_question
   end
 
   def age(age = nil, *)
     if (Integer(age) rescue false)
       save_context :gender
-      respond_with :message, text: ObeyBotFacade::set_age(age), reply_markup: ObeyBot.gender_keyboard
+      respond_with :message, text: ObeyBotFacade.age_answer(age)
+      respond_with :message, text: ObeyBot.gender_question
     else
       save_context :age
       respond_with :message, text: "Неверный формат. Повторите попытку."
     end
   end
 
-  def callback_query(data)
-    if data == 'Муж' or data == "Жен"
-      answer_callback_query 'cool'
-      edit_message :message, text: ObeyBotFacade::set_gender(gender), reply_markup: ObeyBot.skills_keyboard
+  def gender_waiting(gender = nil, *)
+    if gender == "М" or gender == "Ж"
+      respond_with :message, text: ObeyBotFacade.gender_answer(gender)
     else
-      answer_callback_query 'some error'
+      save_context :gender_waiting
+      respond_with :message, text: "Неверный формат. Повторите попытку.", reply_markup: ObeyBot.gender_keyboard
     end
   end
-
-  # def gender_waiting(gender = nil, *)
-  #   if gender == "Муж" or gender == "Жен"
-  #     respond_with :message, text: ObeyBotFacade::set_gender(gender), reply_markup: ObeyBot.skills_keyboard
-  #   else
-  #     save_context :gender_waiting
-  #     respond_with :message, text: "Неверный формат. Повторите попытку.", reply_markup: ObeyBot.gender_keyboard
-  #   end
-  # end
 
 end

@@ -8,12 +8,20 @@ class ObeyBot
     "Сколько тебе лет?"
   end
 
-  def self.say_age(words)
-    "Отлично! Теперь укажите Ваш пол."
+  def self.age_answer
+    "Отлично!"
   end
 
-  def self.say_gender
-    "Отлично! Теперь давай выберем твой уровень."
+  def self.gender_question
+    "Теперь укажите Ваш пол. М - мужской, ж -женский"
+  end
+
+  def self.gender_answer
+    "Отлично!"
+  end
+
+  def self.skills_question
+    "Теперь давай выберем твой уровень."
   end
 
   def self.gender_keyboard
