@@ -1,10 +1,9 @@
 class TelegramWebhookController < Telegram::Bot::UpdatesController
   include Telegram::Bot::UpdatesController::MessageContext
-
+  context_to_action!
 
   def message(message)
-    respond_with :message, text: "Неверный формат. Повторите попытку.", reply_markup: ObeyBot.gender_keyboard
-    # respond_with :message, text: 'message'
+    respond_with :message, text: 'message'
   end
 
   def start(*)
@@ -18,9 +17,7 @@ class TelegramWebhookController < Telegram::Bot::UpdatesController
       respond_with :message, text: ObeyBotFacade::set_age(age), reply_markup: ObeyBot.gender_keyboard
     else
       save_context :age_waiting
-      respond_with :message, text: "Неверный формат. Повторите попытку.", reply_markup: ObeyBot.gender_keyboard
-
-      # respond_with :message, text: "Неверный формат. Повторите попытку."
+      respond_with :message, text: "Неверный формат. Повторите попытку."
     end
   end
 
