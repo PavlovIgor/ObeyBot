@@ -1,5 +1,9 @@
 class ObeyBot
 
+  def self.say_error
+    "Неверный формат. Повторите попытку."
+  end
+
   def self.say_welcome(data)
     "Привет #{responce_appeal(data)}!\r\nРаскажи немного о себе."
   end
