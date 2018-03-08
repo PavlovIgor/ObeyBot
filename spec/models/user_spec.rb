@@ -25,5 +25,10 @@ RSpec.describe User, type: :model do
     it { should_not be_valid }
   end
 
+  describe 'user_id not present' do
+    before {@user.age = "abc" }
+    it { should_not be_valid }
+  end
+
 
 end

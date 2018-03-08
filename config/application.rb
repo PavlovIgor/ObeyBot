@@ -19,6 +19,7 @@ module RealEstateAuctions
     config.i18n.load_path += Dir[Rails.root.join('config', 'locales', '*.{rb,yml}').to_s]
     config.i18n.default_locale = :en
     config.exceptions_app = self.routes
+    config.telegram_updates_controller.session_store = :file_store, {expires_in: 1.month}
 
   end
 end
