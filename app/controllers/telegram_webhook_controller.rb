@@ -19,7 +19,7 @@ class TelegramWebhookController < Telegram::Bot::UpdatesController
       respond_with :message, text: ObeyBotFacade::set_age(age), reply_markup: ObeyBot.gender_keyboard
     else
       save_context :age
-      respond_with :message, text: "Неверный формат. Повторите попытку."
+      edit_message :message, text: "Неверный формат. Повторите попытку."
     end
   end
 
