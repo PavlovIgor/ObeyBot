@@ -8,6 +8,33 @@ class ObeyBot
     "Отлично! Теперь укажите Ваш пол."
   end
 
+  def self.say_gender
+    "Отлично! Теперь давай выберем твой уровень."
+  end
+
+  def self.gender_keyboard
+    {
+      inline_keyboard: [
+        [
+          {text: 'Муж', callback_data: 'Муж'},
+          {text: 'Жен', callback_data: 'Жен'},
+        ]
+      ],
+    }
+  end
+
+  def self.skills_keyboard
+    {
+      inline_keyboard: [
+        [
+          {text: 'Начинающий', callback_data: 'low'},
+          {text: 'Средний', callback_data: 'mid'},
+          {text: 'Профи', callback_data: 'high'},
+        ]
+      ],
+    }
+  end
+
 
 private
   def self.responce_appeal(data)

@@ -10,4 +10,9 @@ class ObeyBotFacade
     ObeyBot.say_age(words)
   end
 
+  def self.set_gender(value)
+    User.update(gender: value)
+    ObeyBot.say_gender
+  end
+
 end

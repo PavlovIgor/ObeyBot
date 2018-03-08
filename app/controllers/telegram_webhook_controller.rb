@@ -14,31 +14,19 @@ class TelegramWebhookController < Telegram::Bot::UpdatesController
   context_handler :age_waiting do |*words|
     if (Integer(words[0]) rescue false)
       save_context :gender_waiting
-      respond_with :message, text: ObeyBotFacade::set_age(words), reply_markup: {
-      inline_keyboard: [
-        [
-          {text: 'Муж', callback_data: 'Муж'},
-          {text: 'Жен', callback_data: 'Жен'},
-        ]
-      ],
-    }
+      respond_with :message, text: ObeyBotFacade::set_age(words), reply_markup: ObeyBot.gender_keyboard
     else
       save_context :age_waiting
       respond_with :message, text: "Неверный формат. Повторите попытку."
     end
   end
 
-  context_handler :gender_waiting do |*words|
-    if false
-      respond_with :message, text: ObeyBotFacade::set_gender(words)
+  context_handler :gender_waiting do |*value|
+    if value == "Муж"
+      respond_with :message, text: ObeyBotFacade::set_gender(value), reply_markup: ObeyBot.skills_keyboard
     else
       save_context :gender_waiting
-      respond_with :message, text: "Неверный формат. Повторите попытку.", reply_markup: {
-        keyboard: ['Муж', 'Жен'],
-        resize_keyboard: true,
-        one_time_keyboard: true,
-        selective: true,
-      }
+      respond_with :message, text: "Неверный формат. Повторите попытку.", reply_markup: ObeyBot.gender_keyboard
     end
   end
 
