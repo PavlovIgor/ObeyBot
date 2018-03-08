@@ -22,6 +22,7 @@ class TelegramWebhookController < Telegram::Bot::UpdatesController
   end
 
   def gender_waiting(value = nil, *)
+    logger.debug(“No output”)
 
     logger.debug update
 
