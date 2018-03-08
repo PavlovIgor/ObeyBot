@@ -8,21 +8,21 @@ class TelegramWebhookController < Telegram::Bot::UpdatesController
   # end
 
   def start(*)
-    save_context :age_waiting
+    save_context :age
     respond_with :message, text: ObeyBotFacade::start(from) if from
   end
 
-  def age_waiting(age = nil, *)
+  def age(age = nil, *)
     if (Integer(age) rescue false)
-      save_context :gender_waiting
+      save_context :gender
       respond_with :message, text: ObeyBotFacade::set_age(age), reply_markup: ObeyBot.gender_keyboard
     else
-      save_context :age_waiting
+      save_context :age
       respond_with :message, text: "Неверный формат. Повторите попытку."
     end
   end
 
-  def gender_waiting_callback_query(data)
+  def gender_callback_query(data)
     if data == 'Муж' or data == "Жен"
       answer_callback_query 'cool'
     else
