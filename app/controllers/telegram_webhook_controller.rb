@@ -22,6 +22,7 @@ class TelegramWebhookController < Telegram::Bot::UpdatesController
   end
 
   def gender_waiting(value = nil, *)
+    p update
     if update['data'] == "Муж" or update['data'] == "Жен"
       respond_with :message, text: ObeyBotFacade::set_gender(update['data']), reply_markup: ObeyBot.skills_keyboard
     else

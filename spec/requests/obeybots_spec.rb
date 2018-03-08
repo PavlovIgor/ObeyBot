@@ -88,21 +88,20 @@ RSpec.describe TelegramWebhookController, :telegram_bot do
     let(:from){ test_data }
     let(:success_text){ "Отлично! Теперь давай выберем твой уровень." }
     let(:error_text){ 'Неверный формат. Повторите попытку.' }
-    let(:payload) { {id: 11, from: from, message: message, data: 'Муж'} }
 
     describe "user send success gender after age" do
-      subject { -> { dispatch callback_query: payload } }
+      subject { -> { dispatch_data 'Муж' } }
       before { dispatch_command :start }
       before { dispatch_message '100' }
       it { should respond_with_message success_text }
     end
 
-    # describe "user send error gender after age" do
-    #   subject { -> { dispatch callback_query: payload } }
-    #   before { dispatch_command :start }
-    #   before { dispatch_message '100' }
-    #   it { should respond_with_message error_text }
-    # end
+    describe "user send error gender after age" do
+      subject { -> { dispatch_message 'Не определился' } }
+      before { dispatch_command :start }
+      before { dispatch_message '100' }
+      it { should respond_with_message error_text }
+    end
 
   end
 
