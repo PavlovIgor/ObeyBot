@@ -30,5 +30,8 @@ class TelegramWebhookController < Telegram::Bot::UpdatesController
     end
   end
 
+  context_handler :age_waiting
+  context_handler :gender_waiting
+
 
 end
