@@ -17,13 +17,13 @@ class TelegramWebhookController < Telegram::Bot::UpdatesController
       respond_with :message, text: ObeyBotFacade::set_age(age), reply_markup: ObeyBot.gender_keyboard
     else
       save_context :age_waiting
-      respond_with :message, text: "Неверный формат. Повторите попытку."
+      answer_callback_query "Неверный формат. Повторите попытку."
     end
   end
 
   def callback_query(data)
     if data == 'Муж' or data == "Жен"
-      answer_inline_query 'cool'
+      answer_callback_query 'cool'
     else
       answer_callback_query 'er'
     end
