@@ -90,7 +90,7 @@ RSpec.describe TelegramWebhookController, :telegram_bot do
     let(:error_text){ 'Неверный формат. Повторите попытку.' }
 
     describe "user send success gender after age" do
-      subject { -> { dispatch_data 'Муж' } }
+      subject { -> { dispatch_message 'Муж' } }
       before { dispatch_command :start }
       before { dispatch_message '100' }
       it { should respond_with_message success_text }

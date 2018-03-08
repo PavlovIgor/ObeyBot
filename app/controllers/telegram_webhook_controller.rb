@@ -1,6 +1,6 @@
 class TelegramWebhookController < Telegram::Bot::UpdatesController
+  include Telegram::Bot::UpdatesController::Session
   include Telegram::Bot::UpdatesController::MessageContext
-  context_to_action!
 
   def message(message)
     respond_with :message, text: message
@@ -21,13 +21,9 @@ class TelegramWebhookController < Telegram::Bot::UpdatesController
     end
   end
 
-  def gender_waiting(value = nil, *)
-    logger.debug(“No output”)
-
-    logger.debug update
-
-    if update['data'] == "Муж" or update['data'] == "Жен"
-      respond_with :message, text: ObeyBotFacade::set_gender(update['data']), reply_markup: ObeyBot.skills_keyboard
+  context_handler :gender_waiting do |*words|
+    if words[0] == "Муж" or words[0] == "Жен"
+      respond_with :message, text: ObeyBotFacade::set_gender(words[0]), reply_markup: ObeyBot.skills_keyboard
     else
       save_context :gender_waiting
       respond_with :message, text: "Неверный формат. Повторите попытку.", reply_markup: ObeyBot.gender_keyboard
