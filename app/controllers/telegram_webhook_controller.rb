@@ -1,10 +1,11 @@
 class TelegramWebhookController < Telegram::Bot::UpdatesController
   include Telegram::Bot::UpdatesController::MessageContext
+  include Telegram::Bot::UpdatesController::CallbackQueryContext
   context_to_action!
 
-  def message(message)
-    respond_with :message, text: 'message'
-  end
+  # def message(message)
+  #   respond_with :message, text: 'message'
+  # end
 
   def start(*)
     save_context :age_waiting
@@ -21,7 +22,7 @@ class TelegramWebhookController < Telegram::Bot::UpdatesController
     end
   end
 
-  def callback_query(data)
+  def gender_waiting_callback_query(data)
     if data == 'Муж' or data == "Жен"
       answer_callback_query 'cool'
     else
