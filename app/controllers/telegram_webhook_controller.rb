@@ -1,7 +1,6 @@
 class TelegramWebhookController < Telegram::Bot::UpdatesController
-  skip_before_action :verify_authenticity_token
   include Telegram::Bot::UpdatesController::MessageContext
-  context_to_action!
+
 
   def message(message)
     respond_with :message, text: 'message'
