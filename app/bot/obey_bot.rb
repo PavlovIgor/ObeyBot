@@ -1,7 +1,11 @@
 class ObeyBot
 
   def self.say_welcome(data)
-    "Привет #{responce_appeal(data)}!\r\nРаскажи немного о себе. Сколько тебе лет?"
+    "Привет #{responce_appeal(data)}!\r\nРаскажи немного о себе."
+  end
+
+  def self.age_question
+    "Сколько тебе лет?"
   end
 
   def self.say_age(words)
