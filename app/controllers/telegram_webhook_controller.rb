@@ -7,7 +7,7 @@ class TelegramWebhookController < Telegram::Bot::UpdatesController
   end
 
   def start(*)
-    save_context :gender_waiting
+    save_context :age_waiting
     respond_with :message, text: ObeyBotFacade::start(from) if from
   end
 
