@@ -12,14 +12,15 @@ class TelegramWebhookController < Telegram::Bot::UpdatesController
   end
 
   def age_waiting(age = nil, *)
-    respond_with :message, text: ObeyBotFacade::set_gender(gender), reply_markup: ObeyBot.skills_keyboard
-    # if (Integer(age) rescue false)
-    #   save_context :gender_waiting
-    #   respond_with :message, text: ObeyBotFacade::set_age(age), reply_markup: ObeyBot.gender_keyboard
-    # else
-    #   save_context :age_waiting
-    #   respond_with :message, text: "Неверный формат. Повторите попытку."
-    # end
+    if (Integer(age) rescue false)
+      save_context :gender_waiting
+      respond_with :message, text: ObeyBotFacade::set_age(age), reply_markup: ObeyBot.gender_keyboard
+    else
+      save_context :age_waiting
+      respond_with :message, text: "Неверный формат. Повторите попытку.", reply_markup: ObeyBot.gender_keyboard
+
+      # respond_with :message, text: "Неверный формат. Повторите попытку."
+    end
   end
 
   def gender_waiting(gender = nil, *)
