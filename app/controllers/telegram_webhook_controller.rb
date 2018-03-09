@@ -8,14 +8,15 @@ class TelegramWebhookController < Telegram::Bot::UpdatesController
 
   def keyboard(value = nil, *)
     if value
-      respond_with :message, text: value
+      respond_with :message, text: value, reply_markup: {
+        remove_keyboard: true
+      }
     else
       save_context :keyboard
       respond_with :message, text: 'ok', reply_markup: {
         keyboard: [['ok', 'cancel']],
         resize_keyboard: true,
-        one_time_keyboard: false,
-        selective: true,
+        one_time_keyboard: true,
       }
     end
   end
