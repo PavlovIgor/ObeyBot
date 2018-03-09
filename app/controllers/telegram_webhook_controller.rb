@@ -62,7 +62,7 @@ class TelegramWebhookController < Telegram::Bot::UpdatesController
     elsif data == "Выполнил"
       save_context :show_training
       respond_with :message, text: ObeyBot.training_done_text, reply_markup: ObeyBot.remove_keyboard
-      respond_with :message, reply_markup: ObeyBot.user_training_buttons(update["message"]['from']['id'], data)
+      respond_with :message, text: "", reply_markup: ObeyBot.user_training_buttons(update["message"]['from']['id'], data)
     end
   end
 
