@@ -1,5 +1,5 @@
 ActiveAdmin.register Training do
-  permit_params :name, :description, :queue
+  permit_params :name, :description, :queue, :program_id
 
   index do
     selectable_column
