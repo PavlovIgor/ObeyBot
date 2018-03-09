@@ -104,6 +104,10 @@ class ObeyBot
     TrainingButtonAdapter.adapt(user.program.trainings.find_by_name(data))
   end
 
+  def self.training_done_text
+    "Отлично!"
+  end
+
 
 private
   def self.responce_appeal(data)
