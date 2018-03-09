@@ -95,7 +95,8 @@ class ObeyBot
   end
 
   def self.user_training_text(from_key, data)
-    data
+    user = TelegramWebhookControllerHelper::current_user(from_key)
+    data + "\r\nОписание\r\n" + user.program.trainings.find_by_name(data).description
   end
 
   def self.user_training_buttons(from_key, data)
