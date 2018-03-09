@@ -64,11 +64,11 @@ class ObeyBot
 
   def self.skills_keyboard
     {
-      keyboard: [[
-        self.vars[:low_skill_level_var],
-        self.vars[:medium_skill_level_var],
-        self.vars[:high_skill_level_var]
-      ]],
+      keyboard: [
+        [self.vars[:low_skill_level_var]],
+        [self.vars[:medium_skill_level_var]],
+        [self.vars[:high_skill_level_var]]
+      ],
       resize_keyboard: true,
     }
   end
