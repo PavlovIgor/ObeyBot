@@ -143,7 +143,10 @@ RSpec.describe TelegramWebhookController, :telegram_bot do
       before { dispatch_message '100' }
       before { dispatch_message 'мужской' }
       it { should respond_with_message success_text }
-      it { should respond_with_message program_with_list }
+      it '' do
+        should respond_with_message program_with_list
+        expect(reply[:reply_markup]).to be_present
+      end
     end
 
     describe "user send error skill level" do
@@ -154,5 +157,29 @@ RSpec.describe TelegramWebhookController, :telegram_bot do
       it { should respond_with_message error_text }
     end
 
+  end
+
+  feature "#menu" do
+    let(:from){ test_data }
+    let(:show_program_text){ "\r\nПрограмма для начинающих\r\nЗанятие №1\r\nЗанятие №2\r\nЗанятие №3" }
+
+    before { @program = FactoryGirl.create(:program) }
+    before do
+      (1..3).each_with_index do |i|
+        FactoryGirl.create(:training, name: 'Занятие №'+i.to_s, queue: i, program: @program)
+      end
+    end
+
+    describe "show_program" do
+      subject { -> { dispatch_message '/show_program' } }
+      before { dispatch_command :start }
+      before { dispatch_message '100' }
+      before { dispatch_message 'мужской' }
+      before { dispatch_message 'новичок' }
+      it { should respond_with_message show_program_text }
+      # it '' do
+      #   expect(reply[:reply_markup]).to be_present
+      # end
+    end
   end
 end

@@ -6,7 +6,8 @@ class ObeyBot
       woman_gender_var: "женский",
       low_skill_level_var: "новичок",
       medium_skill_level_var: "продолжающий",
-      high_skill_level_var: "продвинутый"
+      high_skill_level_var: "продвинутый",
+      show_user_program: "/show_program"
     }
   end
 
@@ -71,6 +72,20 @@ class ObeyBot
       ],
       resize_keyboard: true,
     }
+  end
+
+  def self.user_menu
+    {
+      keyboard: [
+        [self.vars[:show_user_program]],
+      ],
+      resize_keyboard: true,
+    }
+  end
+
+  def self.user_program(from_key)
+    user = User.find_by_from_key(from_key)
+    "\r\n" + user.program.name + "\r\n" + TrainingListAdapter.adapt(user.program.trainings.all)
   end
 
 
