@@ -47,10 +47,22 @@ class TelegramWebhookController < Telegram::Bot::UpdatesController
 
   def show_program(data = nil, *)
     if TelegramWebhookControllerHelper::current_user(update["message"]['from']['id']).program.trainings.pluck(:name).include? update["message"]["text"]
+      save_context :show_training
       respond_with :message, text: ObeyBot.user_training_text(update["message"]['from']['id'], update["message"]["text"]), reply_markup: ObeyBot.user_training_buttons(update["message"]['from']['id'], data)
     else
       save_context :show_program
       respond_with :message, text: ObeyBot.user_program_text(update["message"]['from']['id']), reply_markup: ObeyBot.user_program_buttons(update["message"]['from']['id'])
+    end
+  end
+
+  def show_training(data = nil, *)
+    if data == "Назад"
+      save_context :show_program
+      respond_with :message, text: ObeyBot.user_program_text(update["message"]['from']['id']), reply_markup: ObeyBot.user_program_buttons(update["message"]['from']['id'])
+    # elsif data == "Выполнил"
+    #   save_context :show_program
+    #   respond_with :
+    #   respond_with :message, text: ObeyBot.user_program_text(update["message"]['from']['id']), reply_markup: ObeyBot.user_program_buttons(update["message"]['from']['id'])
     end
   end
 
