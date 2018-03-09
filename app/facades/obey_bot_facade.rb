@@ -20,8 +20,8 @@ class ObeyBotFacade
     ObeyBot.skill_level_answer
   end
 
-  def self.user_program(user_id)
-    user = User.find_by_user_id(user_id)
+  def self.user_program(from_key)
+    user = User.find_by_from_key(from_key)
     "\r\n" + user.program.name + "\r\n" + TrainingListAdapter.adapt(user.program.trainings.all)
   end
 

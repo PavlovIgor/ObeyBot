@@ -1,7 +1,7 @@
 class UserSaveAdapter
   def self.adapt(data)
     {
-      user_id: data['id'],
+      from_key: data['id'],
       is_bot: data['is_bot'],
       first_name: data['first_name'],
       last_name: data['last_name'],

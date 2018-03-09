@@ -1,6 +1,6 @@
 FactoryGirl.define do
   factory :user do
-    user_id 123
+    from_key 123
     is_bot false
     first_name "Igor"
     last_name "Pavlov"

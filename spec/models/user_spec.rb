@@ -9,12 +9,12 @@ RSpec.describe User, type: :model do
     it { should be_valid }
   end
 
-  describe 'user_id not present' do
-    before {@user.user_id = "" }
+  describe 'from_key not present' do
+    before {@user.from_key = "" }
     it { should_not be_valid }
   end
 
-  describe 'user_id not present' do
+  describe 'age not numeric' do
     before {@user.age = "abc" }
     it { should_not be_valid }
   end
