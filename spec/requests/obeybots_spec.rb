@@ -134,7 +134,7 @@ RSpec.describe TelegramWebhookController, :telegram_bot do
         FactoryGirl.create(:training, name: 'Занятие №'+i.to_s, queue: i, program: @program)
       end
     end
-    let(:program_with_list){ "\r\nПрограмма для начинающих\r\nЗанятие №1\r\nЗанятие №2\r\nЗанятие №3" }
+    let(:program_with_list){ "\r\nПрограмма для начинающих" }
     let(:error_text){ 'Неверный формат. Повторите попытку.' }
 
     describe "user send success skill level" do
@@ -161,7 +161,7 @@ RSpec.describe TelegramWebhookController, :telegram_bot do
 
   feature "#menu" do
     let(:from){ test_data }
-    let(:show_program_text){ "\r\nПрограмма для начинающих\r\nЗанятие №1\r\nЗанятие №2\r\nЗанятие №3" }
+    let(:show_program_text){ "\r\nПрограмма для начинающих" }
 
     before { @program = FactoryGirl.create(:program) }
     before do

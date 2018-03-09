@@ -83,9 +83,14 @@ class ObeyBot
     }
   end
 
-  def self.user_program(from_key)
+  def self.user_program_text(from_key)
     user = User.find_by_from_key(from_key)
-    "\r\n" + user.program.name + "\r\n" + TrainingListAdapter.adapt(user.program.trainings.all.order(:queue))
+    "\r\n" + user.program.name
+  end
+
+  def self.user_program_buttons(from_key)
+    user = User.find_by_from_key(from_key)
+    TrainingListAdapter.adapt(user.program.trainings.all.order(:queue))
   end
 
 

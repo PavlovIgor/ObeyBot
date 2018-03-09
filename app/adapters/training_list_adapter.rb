@@ -1,5 +1,10 @@
 class TrainingListAdapter
   def self.adapt(training_list)
-    training_list.pluck(:name).join("\r\n")
+    {
+      keyboard: [
+        training_list.pluck(:name)
+      ],
+      resize_keyboard: true,
+    }
   end
 end

@@ -39,7 +39,7 @@ class TelegramWebhookController < Telegram::Bot::UpdatesController
     data.downcase!
     if [ObeyBot.vars[:low_skill_level_var], ObeyBot.vars[:medium_skill_level_var], ObeyBot.vars[:high_skill_level_var]].include? data
       respond_with :message, text: ObeyBotFacade.skill_level_answer(data, update["message"]['from']['id']), reply_markup: ObeyBot.remove_keyboard
-      respond_with :message, text: ObeyBot.user_program(update["message"]['from']['id']), reply_markup: ObeyBot.user_menu
+      respond_with :message, text: ObeyBot.user_program_text(update["message"]['from']['id']), reply_markup: ObeyBot.user_program_buttons(update["message"]['from']['id'])
     else
       save_context :skill_level
       respond_with :message, text: ObeyBot.say_error
@@ -47,7 +47,7 @@ class TelegramWebhookController < Telegram::Bot::UpdatesController
   end
 
   def show_program
-    respond_with :message, text: ObeyBot.user_program(update["message"]['from']['id'])
+    respond_with :message, text: ObeyBot.user_program_text(update["message"]['from']['id']), reply_markup: ObeyBot.user_program_buttons(update["message"]['from']['id'])
   end
 
 end
