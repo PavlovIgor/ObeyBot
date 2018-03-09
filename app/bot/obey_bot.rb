@@ -34,8 +34,16 @@ class ObeyBot
     "Отлично!"
   end
 
-  def self.skills_level_question
+  def self.skill_level_question
     "Теперь давай выберем твой уровень.\r\n #{self.vars[:low_skill_level_var]} - начинающий, #{self.vars[:medium_skill_level_var]} - средний, #{self.vars[:high_skill_level_var]} - высокий"
+  end
+
+  def self.skill_level_answer
+    "Отлично!"
+  end
+
+  def self.user_program
+    "Вот твоя программа!"
   end
 
   def self.gender_keyboard

@@ -16,25 +16,29 @@ RSpec.describe TelegramWebhookController, :telegram_bot do
     }}
 
   feature '#start' do
-    let(:welcome_text) { "\r\nРаскажи немного о себе. Сколько тебе лет?" }
+    let(:welcome_text) { "\r\nРаскажи немного о себе." }
+    let(:age_question) { "Сколько тебе лет?" }
 
     subject { -> { dispatch_command :start } }
 
     describe 'User with first_name and last_name' do
       let(:from){ test_data }
       it { should respond_with_message 'Привет Igor Pavlov!'+welcome_text }
+      it { should respond_with_message age_question }
     end
 
     describe 'User without first_name' do
       before { test_data['first_name'] = '' }
       let(:from){ test_data }
       it { should respond_with_message 'Привет username!'+welcome_text }
+      it { should respond_with_message age_question }
     end
 
     describe 'User without last_name' do
       before { test_data['last_name'] = '' }
       let(:from){ test_data }
       it { should respond_with_message 'Привет username!'+welcome_text }
+      it { should respond_with_message age_question }
     end
 
     describe 'User without last_name' do
@@ -45,6 +49,7 @@ RSpec.describe TelegramWebhookController, :telegram_bot do
       end
       let(:from){ test_data }
       it { should respond_with_message 'Привет stranger!'+welcome_text }
+      it { should respond_with_message age_question }
     end
 
   end
@@ -52,14 +57,15 @@ RSpec.describe TelegramWebhookController, :telegram_bot do
   feature '#age' do
 
     let(:from){ test_data }
-    let(:success_text){ 'Отлично! Теперь укажите Ваш пол.' }
+    let(:success_text){ 'Отлично!' }
+    let(:gender_text){ "Теперь укажите Ваш пол.\r\n м - мужской, ж -женский" }
     let(:error_text){ 'Неверный формат. Повторите попытку.' }
 
     describe "user send number his age after start" do
       subject { -> { dispatch_message '100' } }
       before { dispatch_command :start }
       it { should respond_with_message success_text }
-      # it { expect(reply[:reply_markup]).to be_present }
+      it { should respond_with_message gender_text }
     end
 
     describe "user send string his age after start" do
@@ -79,6 +85,7 @@ RSpec.describe TelegramWebhookController, :telegram_bot do
       before { dispatch_command :start }
       before { dispatch_message 'abc' }
       it { should respond_with_message success_text }
+      it { should respond_with_message gender_text }
     end
 
   end
@@ -86,11 +93,12 @@ RSpec.describe TelegramWebhookController, :telegram_bot do
   feature '#gender' do
 
     let(:from){ test_data }
-    let(:success_text){ "Отлично! Теперь давай выберем твой уровень." }
+    let(:success_text){ "Отлично!" }
+    let(:skills_question){ "Теперь давай выберем твой уровень." }
     let(:error_text){ 'Неверный формат. Повторите попытку.' }
 
     describe "user send success gender after age" do
-      subject { -> { dispatch_message 'Муж' } }
+      subject { -> { dispatch_message 'м' } }
       before { dispatch_command :start }
       before { dispatch_message '100' }
       it { should respond_with_message success_text }
@@ -105,4 +113,36 @@ RSpec.describe TelegramWebhookController, :telegram_bot do
 
   end
 
+  feature '#skill_level' do
+
+    let(:from){ test_data }
+    let(:success_text){ "Отлично!" }
+    before { @program = FactoryGirl.create(:program) }
+    before do
+      (1..3).each_with_index do |i|
+        FactoryGirl.create(:training, name: 'Занятие №'+i.to_s, queue: i, program: @program)
+      end
+    end
+    before { FactoryGirl.create(:user, program: @program) }
+    let(:program_with_list){ "\r\nПрограмма для начинающих\r\nЗанятие №1\r\nЗанятие №2\r\nЗанятие №3" }
+    let(:error_text){ 'Неверный формат. Повторите попытку.' }
+
+    describe "user send success skill level" do
+      subject { -> { dispatch_message 'н' } }
+      before { dispatch_command :start }
+      before { dispatch_message '100' }
+      before { dispatch_message 'м' }
+      it { should respond_with_message success_text }
+      it { should respond_with_message program_with_list }
+    end
+
+    describe "user send error skill level" do
+      subject { -> { dispatch_message 'error' } }
+      before { dispatch_command :start }
+      before { dispatch_message '100' }
+      before { dispatch_message 'м' }
+      it { should respond_with_message error_text }
+    end
+
+  end
 end
