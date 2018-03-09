@@ -177,9 +177,9 @@ RSpec.describe TelegramWebhookController, :telegram_bot do
       before { dispatch_message 'мужской' }
       before { dispatch_message 'новичок' }
       it { should respond_with_message show_program_text }
-      # it '' do
-      #   expect(reply[:reply_markup]).to be_present
-      # end
+      it '' do
+        expect(reply[:reply_markup]).to be_present
+      end
     end
   end
 end
