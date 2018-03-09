@@ -94,6 +94,15 @@ class ObeyBot
     TrainingListAdapter.adapt(user.program.trainings.all.order(:queue))
   end
 
+  def self.user_training_text(from_key, data)
+    data
+  end
+
+  def self.user_training_buttons(from_key, data)
+    user = TelegramWebhookControllerHelper::current_user(from_key)
+    TrainingButtonAdapter.adapt(user.program.trainings.find_by_name(data))
+  end
+
 
 private
   def self.responce_appeal(data)

@@ -191,7 +191,7 @@ RSpec.describe TelegramWebhookController, :telegram_bot do
     before { @program = FactoryGirl.create(:program) }
     before do
       (1..3).each_with_index do |i|
-        FactoryGirl.create(:training, name: 'Занятие №'+i.to_s, queue: i, program: @program)
+        FactoryGirl.create(:training, name: 'Тренировка №'+i.to_s, queue: i, program: @program)
       end
     end
 
