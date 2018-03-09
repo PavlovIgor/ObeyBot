@@ -72,8 +72,8 @@ RSpec.describe TelegramWebhookController, :telegram_bot do
     describe "user send number his age after start" do
       subject { -> { dispatch_message '100' } }
       before { dispatch_command :start }
+      it { should respond_with_message success_text }
       it 'responce' do
-        should respond_with_message success_text
         should respond_with_message gender_text
         expect(reply[:reply_markup]).to be_present
       end
@@ -95,10 +95,8 @@ RSpec.describe TelegramWebhookController, :telegram_bot do
       subject { -> { dispatch_message '100' } }
       before { dispatch_command :start }
       before { dispatch_message 'abc' }
-      it '' do
-        should respond_with_message success_text
-        should respond_with_message gender_text
-      end
+      it { should respond_with_message success_text }
+      it { should respond_with_message gender_text }
     end
 
   end
@@ -111,7 +109,7 @@ RSpec.describe TelegramWebhookController, :telegram_bot do
     let(:error_text){ 'Неверный формат. Повторите попытку.' }
 
     describe "user send success gender after age" do
-      subject { -> { dispatch_message 'м' } }
+      subject { -> { dispatch_message 'мужской' } }
       before { dispatch_command :start }
       before { dispatch_message '100' }
       it { should respond_with_message success_text }
@@ -140,21 +138,19 @@ RSpec.describe TelegramWebhookController, :telegram_bot do
     let(:error_text){ 'Неверный формат. Повторите попытку.' }
 
     describe "user send success skill level" do
-      subject { -> { dispatch_message 'н' } }
+      subject { -> { dispatch_message 'новичок' } }
       before { dispatch_command :start }
       before { dispatch_message '100' }
-      before { dispatch_message 'м' }
-      it '' do
-        should respond_with_message success_text
-        should respond_with_message program_with_list
-      end
+      before { dispatch_message 'мужской' }
+      it { should respond_with_message success_text }
+      it { should respond_with_message program_with_list }
     end
 
     describe "user send error skill level" do
       subject { -> { dispatch_message 'error' } }
       before { dispatch_command :start }
       before { dispatch_message '100' }
-      before { dispatch_message 'м' }
+      before { dispatch_message 'мужской' }
       it { should respond_with_message error_text }
     end
 

@@ -19,7 +19,7 @@ class ObeyBotFacade
     user = User.find_by_from_key(from_key)
     user.skill_level = value
     # TODO: bullshit solution, it's temporary
-    if value == "н"
+    if value == "новичок"
       user.program = Program.first
     end
     user.save

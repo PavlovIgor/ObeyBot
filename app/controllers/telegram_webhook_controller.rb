@@ -6,14 +6,14 @@ class TelegramWebhookController < Telegram::Bot::UpdatesController
   #   respond_with :message, text: 'message'
   # end
 
-  def keyboard(value = nil, *)
-    if value
-      respond_with :message, text: value, reply_markup: ObeyBot.remove_keyboard
-    else
-      save_context :keyboard
-      respond_with :message, text: 'ok', reply_markup: ObeyBot.gender_keyboard
-    end
-  end
+  # def keyboard(value = nil, *)
+  #   if value
+  #     respond_with :message, text: value, reply_markup: ObeyBot.remove_keyboard
+  #   else
+  #     save_context :keyboard
+  #     respond_with :message, text: 'ok', reply_markup: ObeyBot.gender_keyboard
+  #   end
+  # end
 
   def start(*)
     save_context :age
@@ -36,7 +36,7 @@ class TelegramWebhookController < Telegram::Bot::UpdatesController
     data.downcase!
     if [ObeyBot.vars[:man_gender_var], ObeyBot.vars[:woman_gender_var]].include? data
       save_context :skill_level
-      respond_with :message, text: ObeyBotFacade.gender_answer(data, update["message"]['from']['id'])
+      respond_with :message, text: ObeyBotFacade.gender_answer(data, update["message"]['from']['id']), reply_markup: ObeyBot.remove_keyboard
       respond_with :message, text: ObeyBot.skill_level_question, reply_markup: ObeyBot.gender_keyboard
     else
       save_context :gender
