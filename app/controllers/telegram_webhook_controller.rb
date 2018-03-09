@@ -6,6 +6,20 @@ class TelegramWebhookController < Telegram::Bot::UpdatesController
   #   respond_with :message, text: 'message'
   # end
 
+  def keyboard(value = nil, *)
+    if value
+      respond_with :message, text: value
+    else
+      save_context :keyboard
+      respond_with :message, text: t('.prompt'), reply_markup: {
+        keyboard: ['ok', 'cancel'],
+        resize_keyboard: true,
+        one_time_keyboard: true,
+        selective: true,
+      }
+    end
+  end
+
   def start(*)
     save_context :age
     respond_with :message, text: ObeyBotFacade.start(from)
