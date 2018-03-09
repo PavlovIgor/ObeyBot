@@ -108,6 +108,9 @@ class ObeyBot
     "Отлично!"
   end
 
+  def self.return_text
+    "Можете вернуться к списку тренировок"
+  end
 
 private
   def self.responce_appeal(data)
