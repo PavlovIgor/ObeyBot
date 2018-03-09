@@ -27,7 +27,7 @@ class ObeyBot
   end
 
   def self.gender_question
-    "Теперь укажите Ваш пол.\r\n #{self.vars.man_gender_var} - мужской, ж -женский"
+    "Теперь укажите Ваш пол.\r\n #{self.vars[:man_gender_var]} - мужской, #{self.vars[:woman_gender_var]} -женский"
   end
 
   def self.gender_answer
@@ -35,7 +35,7 @@ class ObeyBot
   end
 
   def self.skills_level_question
-    "Теперь давай выберем твой уровень.\r\n н - начинающий, с - средний, в - высокий"
+    "Теперь давай выберем твой уровень.\r\n #{self.vars[:low_skill_level_var]} - начинающий, #{self.vars[:medium_skill_level_var]} - средний, #{self.vars[:high_skill_level_var]} - высокий"
   end
 
   def self.gender_keyboard

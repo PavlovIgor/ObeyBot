@@ -25,7 +25,7 @@ class TelegramWebhookController < Telegram::Bot::UpdatesController
 
   def gender(data = nil, *)
     data.downcase!
-    if data == "м" or data == "ж"
+    if [ObeyBot.vars[:man_gender_var], ObeyBot.vars[:woman_gender_var]].include? data
       save_context :skill_level
       respond_with :message, text: ObeyBotFacade.gender_answer(data)
       respond_with :message, text: ObeyBot.skills_level_question
@@ -37,7 +37,7 @@ class TelegramWebhookController < Telegram::Bot::UpdatesController
 
   def skill_level(data = nil, *)
     data.downcase!
-    if data == "н" or data == "с" or data == "в"
+    if [ObeyBot.vars[:low_skill_level_var], ObeyBot.vars[:medium_skill_level_var], ObeyBot.vars[:high_skill_level_var]].include? data
       respond_with :message, text: ObeyBotFacade.skill_level_answer(data)
     else
       save_context :skill_level
