@@ -23,12 +23,23 @@ class TelegramWebhookController < Telegram::Bot::UpdatesController
     end
   end
 
-  def gender(gender = nil, *)
-    if gender == "М" or gender == "Ж"
-      save_context :skills
-      respond_with :message, text: ObeyBotFacade.gender_answer(gender)
+  def gender(data = nil, *)
+    data.downcase!
+    if data == "м" or data == "ж"
+      save_context :skill_level
+      respond_with :message, text: ObeyBotFacade.gender_answer(data)
     else
       save_context :gender
+      respond_with :message, text: ObeyBot.say_error
+    end
+  end
+
+  def skill_level(data = nil, *)
+    data.downcase!
+    if data
+      respond_with :message, text: ObeyBotFacade.skill_level_answer(data)
+    else
+      save_context :skill_level
       respond_with :message, text: ObeyBot.say_error
     end
   end

@@ -17,7 +17,7 @@ class ObeyBot
   end
 
   def self.gender_question
-    "Теперь укажите Ваш пол. М - мужской, ж -женский"
+    "Теперь укажите Ваш пол. м - мужской, ж -женский"
   end
 
   def self.gender_answer
