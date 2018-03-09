@@ -1,5 +1,15 @@
 class ObeyBot
 
+  def self.vars
+    {
+      man_gender_var: "м",
+      woman_gender_var: "ж",
+      low_skill_level_var: "н",
+      medium_skill_level_var: "с",
+      high_skill_level_var: "в"
+    }
+  end
+
   def self.say_error
     "Неверный формат. Повторите попытку."
   end
@@ -17,15 +27,15 @@ class ObeyBot
   end
 
   def self.gender_question
-    "Теперь укажите Ваш пол. м - мужской, ж -женский"
+    "Теперь укажите Ваш пол.\r\n #{self.vars.man_gender_var} - мужской, ж -женский"
   end
 
   def self.gender_answer
     "Отлично!"
   end
 
-  def self.skills_question
-    "Теперь давай выберем твой уровень."
+  def self.skills_level_question
+    "Теперь давай выберем твой уровень.\r\n н - начинающий, с - средний, в - высокий"
   end
 
   def self.gender_keyboard

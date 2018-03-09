@@ -15,4 +15,9 @@ class ObeyBotFacade
     ObeyBot.gender_answer
   end
 
+  def self.skill_level_answer(value)
+    User.update(skill_level: value)
+    ObeyBot.skill_level_answer
+  end
+
 end
