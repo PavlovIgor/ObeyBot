@@ -37,7 +37,7 @@ class TelegramWebhookController < Telegram::Bot::UpdatesController
     if [ObeyBot.vars[:man_gender_var], ObeyBot.vars[:woman_gender_var]].include? data
       save_context :skill_level
       respond_with :message, text: ObeyBotFacade.gender_answer(data, update["message"]['from']['id']), reply_markup: ObeyBot.remove_keyboard
-      respond_with :message, text: ObeyBot.skill_level_question, reply_markup: ObeyBot.gender_keyboard
+      respond_with :message, text: ObeyBot.skill_level_question, reply_markup: ObeyBot.skills_keyboard
     else
       save_context :gender
       respond_with :message, text: ObeyBot.say_error
