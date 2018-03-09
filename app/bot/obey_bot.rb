@@ -2,11 +2,11 @@ class ObeyBot
 
   def self.vars
     {
-      man_gender_var: "м",
-      woman_gender_var: "ж",
-      low_skill_level_var: "н",
-      medium_skill_level_var: "с",
-      high_skill_level_var: "в"
+      man_gender_var: "мужской",
+      woman_gender_var: "женский",
+      low_skill_level_var: "новичок",
+      medium_skill_level_var: "продолжающий",
+      high_skill_level_var: "продвинутый"
     }
   end
 
@@ -27,7 +27,7 @@ class ObeyBot
   end
 
   def self.gender_question
-    "Теперь укажите Ваш пол.\r\n #{self.vars[:man_gender_var]} - мужской, #{self.vars[:woman_gender_var]} -женский"
+    "Теперь укажите Ваш пол."
   end
 
   def self.gender_answer
@@ -35,7 +35,7 @@ class ObeyBot
   end
 
   def self.skill_level_question
-    "Теперь давай выберем твой уровень.\r\n #{self.vars[:low_skill_level_var]} - начинающий, #{self.vars[:medium_skill_level_var]} - средний, #{self.vars[:high_skill_level_var]} - высокий"
+    "Теперь давай выберем твой уровень."
   end
 
   def self.skill_level_answer
@@ -46,26 +46,30 @@ class ObeyBot
     "Вот твоя программа!"
   end
 
+  def self.remove_keyboard
+    {
+      remove_keyboard: true
+    }
+  end
+
   def self.gender_keyboard
     {
-      inline_keyboard: [
-        [
-          {text: 'Муж', callback_data: 'Муж'},
-          {text: 'Жен', callback_data: 'Жен'},
-        ]
-      ],
+      keyboard: [[
+        self.vars[:man_gender_var],
+        self.vars[:woman_gender_var]
+        ]],
+      resize_keyboard: true,
     }
   end
 
   def self.skills_keyboard
     {
-      inline_keyboard: [
-        [
-          {text: 'Начинающий', callback_data: 'low'},
-          {text: 'Средний', callback_data: 'mid'},
-          {text: 'Профи', callback_data: 'high'},
-        ]
-      ],
+      keyboard: [[
+        self.vars[:low_skill_level_var],
+        self.vars[:medium_skill_level_var],
+        self.vars[:high_skill_level_var]
+      ]],
+      resize_keyboard: true,
     }
   end
 

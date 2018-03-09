@@ -23,22 +23,28 @@ RSpec.describe TelegramWebhookController, :telegram_bot do
 
     describe 'User with first_name and last_name' do
       let(:from){ test_data }
-      it { should respond_with_message 'Привет Igor Pavlov!'+welcome_text }
-      it { should respond_with_message age_question }
+      it '' do
+        should respond_with_message 'Привет Igor Pavlov!'+welcome_text
+        should respond_with_message age_question
+      end
     end
 
     describe 'User without first_name' do
       before { test_data['first_name'] = '' }
       let(:from){ test_data }
-      it { should respond_with_message 'Привет username!'+welcome_text }
-      it { should respond_with_message age_question }
+      it '' do
+        should respond_with_message 'Привет username!'+welcome_text
+        should respond_with_message age_question
+      end
     end
 
     describe 'User without last_name' do
       before { test_data['last_name'] = '' }
       let(:from){ test_data }
-      it { should respond_with_message 'Привет username!'+welcome_text }
-      it { should respond_with_message age_question }
+      it '' do
+        should respond_with_message 'Привет username!'+welcome_text
+        should respond_with_message age_question
+      end
     end
 
     describe 'User without last_name' do
@@ -48,8 +54,10 @@ RSpec.describe TelegramWebhookController, :telegram_bot do
         test_data['last_name'] = ''
       end
       let(:from){ test_data }
-      it { should respond_with_message 'Привет stranger!'+welcome_text }
-      it { should respond_with_message age_question }
+      it '' do
+        should respond_with_message 'Привет stranger!'+welcome_text
+        should respond_with_message age_question
+      end
     end
 
   end
@@ -58,14 +66,17 @@ RSpec.describe TelegramWebhookController, :telegram_bot do
 
     let(:from){ test_data }
     let(:success_text){ 'Отлично!' }
-    let(:gender_text){ "Теперь укажите Ваш пол.\r\n м - мужской, ж -женский" }
+    let(:gender_text){ "Теперь укажите Ваш пол." }
     let(:error_text){ 'Неверный формат. Повторите попытку.' }
 
     describe "user send number his age after start" do
       subject { -> { dispatch_message '100' } }
       before { dispatch_command :start }
-      it { should respond_with_message success_text }
-      it { should respond_with_message gender_text }
+      it 'responce' do
+        should respond_with_message success_text
+        should respond_with_message gender_text
+        expect(reply[:reply_markup]).to be_present
+      end
     end
 
     describe "user send string his age after start" do
@@ -84,8 +95,10 @@ RSpec.describe TelegramWebhookController, :telegram_bot do
       subject { -> { dispatch_message '100' } }
       before { dispatch_command :start }
       before { dispatch_message 'abc' }
-      it { should respond_with_message success_text }
-      it { should respond_with_message gender_text }
+      it '' do
+        should respond_with_message success_text
+        should respond_with_message gender_text
+      end
     end
 
   end
@@ -131,8 +144,10 @@ RSpec.describe TelegramWebhookController, :telegram_bot do
       before { dispatch_command :start }
       before { dispatch_message '100' }
       before { dispatch_message 'м' }
-      it { should respond_with_message success_text }
-      it { should respond_with_message program_with_list }
+      it '' do
+        should respond_with_message success_text
+        should respond_with_message program_with_list
+      end
     end
 
     describe "user send error skill level" do
