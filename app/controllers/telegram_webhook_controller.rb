@@ -24,7 +24,6 @@ class TelegramWebhookController < Telegram::Bot::UpdatesController
   end
 
   def gender(data = nil, *)
-    data.downcase!
     if [ObeyBot.vars[:man_gender_var], ObeyBot.vars[:woman_gender_var]].include? data
       save_context :skill_level
       respond_with :message, text: ObeyBotFacade.gender_answer(data, update["message"]['from']['id']), reply_markup: ObeyBot.remove_keyboard
@@ -36,8 +35,8 @@ class TelegramWebhookController < Telegram::Bot::UpdatesController
   end
 
   def skill_level(data = nil, *)
-    data.downcase!
     if [ObeyBot.vars[:low_skill_level_var], ObeyBot.vars[:medium_skill_level_var], ObeyBot.vars[:high_skill_level_var]].include? data
+      save_context :show_program
       respond_with :message, text: ObeyBotFacade.skill_level_answer(data, update["message"]['from']['id']), reply_markup: ObeyBot.remove_keyboard
       respond_with :message, text: ObeyBot.user_program_text(update["message"]['from']['id']), reply_markup: ObeyBot.user_program_buttons(update["message"]['from']['id'])
     else
@@ -46,8 +45,10 @@ class TelegramWebhookController < Telegram::Bot::UpdatesController
     end
   end
 
-  def show_program
-    respond_with :message, text: ObeyBot.user_program_text(update["message"]['from']['id']), reply_markup: ObeyBot.user_program_buttons(update["message"]['from']['id'])
+  def show_program(data = nil, *)
+    if TelegramWebhookControllerHelper::current_user(update["message"]['from']['id']).program.trainings.pluck(:name).include? data
+      respond_with :message, text: ObeyBot.user_program_text(update["message"]['from']['id']), reply_markup: ObeyBot.user_program_buttons(update["message"]['from']['id'])
+    end
   end
 
 end

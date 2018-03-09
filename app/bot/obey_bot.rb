@@ -1,4 +1,5 @@
 class ObeyBot
+  include TelegramWebhookControllerHelper
 
   def self.vars
     {
@@ -84,12 +85,12 @@ class ObeyBot
   end
 
   def self.user_program_text(from_key)
-    user = User.find_by_from_key(from_key)
+    user = TelegramWebhookControllerHelper::current_user(from_key)
     "\r\n" + user.program.name
   end
 
   def self.user_program_buttons(from_key)
-    user = User.find_by_from_key(from_key)
+    user = TelegramWebhookControllerHelper::current_user(from_key)
     TrainingListAdapter.adapt(user.program.trainings.all.order(:queue))
   end
 

@@ -159,7 +159,7 @@ RSpec.describe TelegramWebhookController, :telegram_bot do
 
   end
 
-  feature "#menu" do
+  feature "#program" do
     let(:from){ test_data }
     let(:show_program_text){ "\r\nПрограмма для начинающих" }
 
@@ -181,5 +181,32 @@ RSpec.describe TelegramWebhookController, :telegram_bot do
         expect(reply[:reply_markup]).to be_present
       end
     end
+
   end
+
+  feature "#trainig" do
+    let(:from){ test_data }
+    let(:show_training_text){ "Тренировка №1" }
+
+    before { @program = FactoryGirl.create(:program) }
+    before do
+      (1..3).each_with_index do |i|
+        FactoryGirl.create(:training, name: 'Занятие №'+i.to_s, queue: i, program: @program)
+      end
+    end
+
+    describe "show_program" do
+      subject { -> { dispatch_message 'Тренировка №1' } }
+      before { dispatch_command :start }
+      before { dispatch_message '100' }
+      before { dispatch_message 'мужской' }
+      before { dispatch_message 'новичок' }
+      it { should respond_with_message show_training_text }
+      it '' do
+        expect(reply[:reply_markup]).to be_present
+      end
+    end
+
+  end
+
 end
