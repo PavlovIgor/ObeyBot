@@ -1,7 +1,10 @@
 class ObeyBotFacade
 
   def self.start(data)
-    User.create!(UserSaveAdapter.adapt(data))
+    user = User.find_by_from_key(data['id'])
+    if not user
+      User.create!(UserSaveAdapter.adapt(data))
+    end
     ObeyBot.say_welcome(data)
   end
 
