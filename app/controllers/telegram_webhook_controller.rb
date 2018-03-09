@@ -11,10 +11,10 @@ class TelegramWebhookController < Telegram::Bot::UpdatesController
       respond_with :message, text: value
     else
       save_context :keyboard
-      respond_with :message, text: t('.prompt'), reply_markup: {
+      respond_with :message, text: 'ok', reply_markup: {
         keyboard: [['ok', 'cancel']],
         resize_keyboard: true,
-        one_time_keyboard: true,
+        one_time_keyboard: false,
         selective: true,
       }
     end
