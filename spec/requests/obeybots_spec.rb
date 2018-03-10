@@ -130,12 +130,6 @@ RSpec.describe TelegramWebhookController, :telegram_bot do
 
     let(:from){ test_data }
     let(:success_text){ "Отлично!" }
-    before { @program = FactoryGirl.create(:program) }
-    before do
-      (1..3).each_with_index do |i|
-        FactoryGirl.create(:training, name: 'Занятие №'+i.to_s, queue: i, program: @program)
-      end
-    end
     let(:program_with_list){ "\r\nПрограмма для начинающих" }
     let(:error_text){ 'Неверный формат. Повторите попытку.' }
 
@@ -166,13 +160,6 @@ RSpec.describe TelegramWebhookController, :telegram_bot do
     let(:from){ test_data }
     let(:show_program_text){ "\r\nПрограмма для начинающих" }
 
-    before { @program = FactoryGirl.create(:program) }
-    before do
-      (1..3).each_with_index do |i|
-        FactoryGirl.create(:training, name: 'Занятие №'+i.to_s, queue: i, program: @program)
-      end
-    end
-
     describe "show_program" do
       subject { -> { dispatch_message '/show_program' } }
       before { dispatch_command :start }
@@ -194,13 +181,6 @@ RSpec.describe TelegramWebhookController, :telegram_bot do
     let(:show_program_text){ "\r\nПрограмма для начинающих" }
     let(:done_program_text){ "Отлично!" }
     let(:return_text){ "Можете вернуться к списку тренировок" }
-
-    before { @program = FactoryGirl.create(:program) }
-    before do
-      (1..3).each_with_index do |i|
-        FactoryGirl.create(:training, name: 'Тренировка №'+i.to_s, queue: i, program: @program)
-      end
-    end
 
     describe "show training" do
       subject { -> { dispatch_message 'Тренировка №1' } }

@@ -50,10 +50,8 @@ class TelegramWebhookController < Telegram::Bot::UpdatesController
   end
 
   def skill_level(data = nil, *)
-      p update["message"]["text"]
-      p Program.all.pluck(:name).include? update["message"]["text"]
       if Program.all.pluck(:name).include? update["message"]["text"]
-          ObeyBotFacade.set_skill_level(data, from['id'])
+          ObeyBotFacade.set_skill_level(update["message"]["text"], from['id'])
           respond_with  :message,
                         text: ObeyBot.vars[:skill_level_answer],
                         reply_markup: ObeyBot.vars[:remove_keyboard]
@@ -73,7 +71,8 @@ class TelegramWebhookController < Telegram::Bot::UpdatesController
   end
 
   def show_program(data = nil, *)
-      if TelegramWebhookControllerHelper::current_user(from['id']).program.trainings.pluck(:name).include? update["message"]["text"]
+      p self.current
+      if self.current.program.trainings.pluck(:name).include? update["message"]["text"]
           self.show_training
 
       elsif data.nil?
@@ -110,6 +109,11 @@ class TelegramWebhookController < Telegram::Bot::UpdatesController
           respond_with  :message,
                         text: ObeyBot.vars[:error]
     end
+  end
+
+  def current
+    session[:current_user_id] ||= from['id']
+    User.find_by_from_key(session[:current_user_id])
   end
 
 end
