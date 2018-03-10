@@ -4,7 +4,7 @@ class TelegramWebhookController < Telegram::Bot::UpdatesController
   use_session!
 
   def start(*)
-      ObeyBotFacade.start(from)
+      ObeyBotFacade.new_user(from)
       respond_with  :message,
                     text: ObeyBot.say_welcome(from)
       self.age
@@ -12,7 +12,7 @@ class TelegramWebhookController < Telegram::Bot::UpdatesController
 
   def age(age = nil, *)
       if (Integer(age) rescue false)
-          ObeyBotFacade.age_answer(age, from['id'])
+          ObeyBotFacade.set_age(age, from['id'])
           respond_with  :message,
                         text: ObeyBot.vars[:age_answer]
           self.gender
@@ -23,15 +23,15 @@ class TelegramWebhookController < Telegram::Bot::UpdatesController
       else
           save_context  :age
           respond_with  :message,
-                        text: ObeyBot.vars[:say_error]
+                        text: ObeyBot.vars[:error]
       end
   end
 
   def gender(data = nil, *)
-      if [  ObeyBot.vars[:man_gender_var],
-            ObeyBot.vars[:woman_gender_var]
+      if [  ObeyBot.vars[:man],
+            ObeyBot.vars[:woman]
       ].include? data
-          ObeyBotFacade.gender_answer(data, from['id'])
+          ObeyBotFacade.set_gender(data, from['id'])
           respond_with  :message,
                         text: ObeyBot.vars[:gender_answer],
                         reply_markup: ObeyBot.vars[:remove_keyboard]
@@ -45,16 +45,16 @@ class TelegramWebhookController < Telegram::Bot::UpdatesController
       else
           save_context  :gender
           respond_with  :message,
-                        text: ObeyBot.vars[:say_error]
+                        text: ObeyBot.vars[:error]
       end
   end
 
   def skill_level(data = nil, *)
-      if [  ObeyBot.vars[:low_skill_level_var],
-            ObeyBot.vars[:medium_skill_level_var],
-            ObeyBot.vars[:high_skill_level_var]
+      if [  ObeyBot.vars[:low_skill],
+            ObeyBot.vars[:medium_skill],
+            ObeyBot.vars[:high_skill]
       ].include? data
-          ObeyBotFacade.skill_level_answer(data, from['id'])
+          ObeyBotFacade.set_skill_level(data, from['id'])
           respond_with  :message,
                         text: ObeyBot.vars[:skill_level_answer],
                         reply_markup: ObeyBot.vars[:remove_keyboard]
@@ -69,7 +69,7 @@ class TelegramWebhookController < Telegram::Bot::UpdatesController
       else
           save_context  :skill_level
           respond_with  :message,
-                        text: ObeyBot.vars[:say_error]
+                        text: ObeyBot.vars[:error]
       end
   end
 
@@ -85,7 +85,7 @@ class TelegramWebhookController < Telegram::Bot::UpdatesController
       else
           save_context  :show_program
           respond_with  :message,
-                        text: ObeyBot.vars[:say_error]
+                        text: ObeyBot.vars[:error]
     end
   end
 
@@ -96,10 +96,10 @@ class TelegramWebhookController < Telegram::Bot::UpdatesController
       elsif data == "Выполнил"
           save_context  :show_training
           respond_with  :message,
-                        text: ObeyBot.vars[:training_done_text],
+                        text: ObeyBot.vars[:training_done],
                         reply_markup: ObeyBot.vars[:remove_keyboard]
           respond_with  :message,
-                        text: ObeyBot.vars[:return_text],
+                        text: ObeyBot.vars[:return],
                         reply_markup: ObeyBot.user_training_buttons(from['id'], data)
       elsif data.nil?
           save_context  :show_training
@@ -109,7 +109,7 @@ class TelegramWebhookController < Telegram::Bot::UpdatesController
       else
           save_context  :show_training
           respond_with  :message,
-                        text: ObeyBot.vars[:say_error]
+                        text: ObeyBot.vars[:error]
     end
   end
 

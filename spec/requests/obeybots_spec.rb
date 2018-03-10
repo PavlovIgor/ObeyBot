@@ -16,7 +16,7 @@ RSpec.describe TelegramWebhookController, :telegram_bot do
     }}
 
   feature '#start' do
-    let(:welcome_text) { "\r\nРаскажи немного о себе." }
+    let(:welcome_text) { "\r\nРаскажите немного о себе." }
     let(:age_question) { "Сколько тебе лет?" }
 
     subject { -> { dispatch_command :start } }
