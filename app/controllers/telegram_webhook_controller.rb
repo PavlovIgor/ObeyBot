@@ -69,6 +69,7 @@ class TelegramWebhookController < Telegram::Bot::UpdatesController
         respond_with  :message,
                       text: ObeyBotFacade.skill_level_answer(data, from['id']),
                       reply_markup: ObeyBot.remove_keyboard
+        self.show_program
 
     elsif data.nil?
       save_context  :skill_level
