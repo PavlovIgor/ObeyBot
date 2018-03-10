@@ -3,56 +3,35 @@ class ObeyBot
 
   def self.vars
     {
-      man_gender_var:           "мужской",
-      woman_gender_var:         "женский",
-      low_skill_level_var:      "новичок",
-      medium_skill_level_var:   "продолжающий",
-      high_skill_level_var:     "продвинутый",
-      show_user_program:        "/show_program"
+      man:                  "мужской",
+      woman:                "женский",
+      low_skill:            "новичок",
+      medium_skill:         "продолжающий",
+      high_skill:           "продвинутый",
+      show_program:         "/show_program",
+      error:                "Неверный формат. Повторите попытку.",
+      age_question:         "Сколько тебе лет?",
+      age_answer:           "Отлично!",
+      gender_question:      "Теперь укажите Ваш пол.",
+      gender_answer:        "Отлично!",
+      skill_level_question: "Теперь выберем Ваш уровень.",
+      skill_level_answer:   "Отлично!",
+      user_program:         "Ваша программа!",
+      training_done_text:   "Отлично!",
+      return_text:          "Можете вернуться к списку тренировок",
+      remove_keyboard:      {remove_keyboard: true},
     }
-  end
-
-  def self.say_error
-    "Неверный формат. Повторите попытку."
   end
 
   def self.say_welcome(data)
     "Привет #{responce_appeal(data)}!\r\nРаскажи немного о себе."
   end
 
-  def self.age_question
-    "Сколько тебе лет?"
-  end
-
-  def self.age_answer
-    "Отлично!"
-  end
-
-  def self.gender_question
-    "Теперь укажите Ваш пол."
-  end
-
-  def self.gender_answer
-    "Отлично!"
-  end
-
-  def self.skill_level_question
-    "Теперь давай выберем твой уровень."
-  end
-
-  def self.skill_level_answer
-    "Отлично!"
-  end
-
-  def self.user_program
-    "Вот твоя программа!"
-  end
-
-  def self.remove_keyboard
-    {
-      remove_keyboard: true
-    }
-  end
+  # def self.remove_keyboard
+  #   {
+  #     remove_keyboard: true
+  #   }
+  # end
 
   def self.gender_keyboard
     {
@@ -102,14 +81,6 @@ class ObeyBot
   def self.user_training_buttons(from_key, data)
     user = TelegramWebhookControllerHelper::current_user(from_key)
     TrainingButtonAdapter.adapt(user.program.trainings.find_by_name(data))
-  end
-
-  def self.training_done_text
-    "Отлично!"
-  end
-
-  def self.return_text
-    "Можете вернуться к списку тренировок"
   end
 
 private
