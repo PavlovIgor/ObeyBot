@@ -50,10 +50,7 @@ class TelegramWebhookController < Telegram::Bot::UpdatesController
   end
 
   def skill_level(data = nil, *)
-      if [  ObeyBot.vars[:low_skill],
-            ObeyBot.vars[:medium_skill],
-            ObeyBot.vars[:high_skill]
-      ].include? data
+      if Training.all.pluck(:name).include? update["message"]["text"]
           ObeyBotFacade.set_skill_level(data, from['id'])
           respond_with  :message,
                         text: ObeyBot.vars[:skill_level_answer],
