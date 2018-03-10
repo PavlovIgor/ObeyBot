@@ -3,12 +3,12 @@ class ObeyBot
 
   def self.vars
     {
-      man_gender_var: "мужской",
-      woman_gender_var: "женский",
-      low_skill_level_var: "новичок",
-      medium_skill_level_var: "продолжающий",
-      high_skill_level_var: "продвинутый",
-      show_user_program: "/show_program"
+      man_gender_var:           "мужской",
+      woman_gender_var:         "женский",
+      low_skill_level_var:      "новичок",
+      medium_skill_level_var:   "продолжающий",
+      high_skill_level_var:     "продвинутый",
+      show_user_program:        "/show_program"
     }
   end
 
@@ -113,14 +113,24 @@ class ObeyBot
   end
 
 private
+
   def self.responce_appeal(data)
-    if data.key?("first_name") && data.key?("last_name") && data['first_name'].present? && data['last_name'].present?
-      data['first_name'] + ' ' + data['last_name']
-    elsif data.key?("username") && data['username'].present?
-      data['username']
+
+    if data['first_name'].present? &&
+    data['last_name'].present?
+
+        data['first_name'] + ' ' + data['last_name']
+
+    elsif data.key?("username") &&
+    data['username'].present?
+
+        data['username']
+
     else
-      'stranger'
+        'stranger'
+
     end
+
   end
 
 end

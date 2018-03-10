@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180309030939) do
+ActiveRecord::Schema.define(version: 20180310210657) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -46,6 +46,15 @@ ActiveRecord::Schema.define(version: 20180309030939) do
     t.index ["reset_password_token"], name: "index_admin_users_on_reset_password_token", unique: true
   end
 
+  create_table "completeds", force: :cascade do |t|
+    t.bigint "user_id"
+    t.bigint "training_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["training_id"], name: "index_completeds_on_training_id"
+    t.index ["user_id"], name: "index_completeds_on_user_id"
+  end
+
   create_table "programs", force: :cascade do |t|
     t.string "name"
     t.datetime "created_at", null: false
@@ -78,6 +87,8 @@ ActiveRecord::Schema.define(version: 20180309030939) do
     t.index ["program_id"], name: "index_users_on_program_id"
   end
 
+  add_foreign_key "completeds", "trainings"
+  add_foreign_key "completeds", "users"
   add_foreign_key "trainings", "programs"
   add_foreign_key "users", "programs"
 end
