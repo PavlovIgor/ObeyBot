@@ -140,7 +140,7 @@ RSpec.describe TelegramWebhookController, :telegram_bot do
     let(:error_text){ 'Неверный формат. Повторите попытку.' }
 
     describe "user send success skill level" do
-      subject { -> { dispatch_message 'новичок' } }
+      subject { -> { dispatch_message 'Программа для начинающих' } }
       before { dispatch_command :start }
       before { dispatch_message '100' }
       before { dispatch_message 'мужской' }
@@ -178,7 +178,7 @@ RSpec.describe TelegramWebhookController, :telegram_bot do
       before { dispatch_command :start }
       before { dispatch_message '100' }
       before { dispatch_message 'мужской' }
-      before { dispatch_message 'новичок' }
+      before { dispatch_message 'Программа для начинающих' }
       it { should respond_with_message show_program_text }
       it '' do
         expect(reply[:reply_markup]).to be_present
@@ -207,7 +207,7 @@ RSpec.describe TelegramWebhookController, :telegram_bot do
       before { dispatch_command :start }
       before { dispatch_message '100' }
       before { dispatch_message 'мужской' }
-      before { dispatch_message 'новичок' }
+      before { dispatch_message 'Программа для начинающих' }
       it '' do
         should respond_with_message show_training_text
       end
@@ -222,7 +222,7 @@ RSpec.describe TelegramWebhookController, :telegram_bot do
       before { dispatch_command :start }
       before { dispatch_message '100' }
       before { dispatch_message 'мужской' }
-      before { dispatch_message 'новичок' }
+      before { dispatch_message 'Программа для начинающих' }
       before { dispatch_message 'Тренировка №1' }
       it '' do
         should respond_with_message show_program_text
@@ -238,7 +238,7 @@ RSpec.describe TelegramWebhookController, :telegram_bot do
       before { dispatch_command :start }
       before { dispatch_message '100' }
       before { dispatch_message 'мужской' }
-      before { dispatch_message 'новичок' }
+      before { dispatch_message 'Программа для начинающих' }
       before { dispatch_message 'Тренировка №1' }
       it '' do
         should respond_with_message done_program_text
