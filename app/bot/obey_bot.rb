@@ -1,5 +1,4 @@
 class ObeyBot
-  include TelegramWebhookControllerHelper
 
   def self.vars
     {
