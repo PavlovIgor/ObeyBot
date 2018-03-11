@@ -53,7 +53,7 @@ class ObeyBot
   end
 
   def self.user_program_buttons(current_user)
-    { keyboard: current_user.program.trainings.collect { |x| [x.name] } }
+    { keyboard: current_user.program.trainings.order(:queue).collect { |x| [x.name] } }
   end
 
   def self.user_training_buttons(current_user, training_name)
