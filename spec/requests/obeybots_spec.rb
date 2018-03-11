@@ -129,6 +129,7 @@ RSpec.describe TelegramWebhookController, :telegram_bot do
       before { dispatch_command :start }
       before { dispatch_message '100' }
       it { should respond_with_message error_text }
+      it { expect(reply[:reply_markup][:keyboard]).to match_array([["мужской","женский"]]) }
     end
 
   end
@@ -281,5 +282,43 @@ RSpec.describe TelegramWebhookController, :telegram_bot do
       it { should respond_with_message show_program_text }
     end
   end
+
+  feature '#before_action' do
+    let(:menu) { "Меню" }
+
+    describe "age" do
+      subject { -> { dispatch_message '/menu' } }
+      before { dispatch_command :start }
+      let(:age_question) { "Сколько Вам лет?" }
+
+      it { should respond_with_message age_question }
+      it { should_not respond_with_message menu }
+    end
+
+    describe "gender" do
+      subject { -> { dispatch_message '/menu' } }
+      before { dispatch_command :start }
+      before { dispatch_message '100' }
+      let(:gender_question){ "Теперь укажите Ваш пол." }
+
+      it { should respond_with_message gender_question }
+      it { expect(reply[:reply_markup][:keyboard]).to match_array([["мужской","женский"]]) }
+      it { should_not respond_with_message menu }
+    end
+
+    describe "program" do
+      subject { -> { dispatch_message '/menu' } }
+      before { dispatch_command :start }
+      before { dispatch_message '100' }
+      before { dispatch_message 'мужской' }
+      let(:skills_question){ "Теперь выберем Ваш уровень." }
+
+      it { should respond_with_message skills_question }
+      it { expect(reply[:reply_markup][:keyboard]).to match_array([["Программа для начинающих"]]) }
+      it { should_not respond_with_message menu }
+    end
+
+  end
+
 
 end

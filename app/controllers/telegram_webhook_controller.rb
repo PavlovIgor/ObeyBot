@@ -3,28 +3,14 @@ class TelegramWebhookController < Telegram::Bot::UpdatesController
   context_to_action!
   use_session!
 
+  before_action :check_settings,
+                only: [:menu, :show_program, :show_training]
+
   def start(*)
       ObeyBotFacade.start(from, current_user)
       respond_with  :message,
                     text: ObeyBot.say_welcome(from)
       self.age
-  end
-
-  def menu(data = nil, *)
-    if data == ObeyBot.vars[:settings]
-      self.settings
-    elsif data == ObeyBot.vars[:program]
-      self.program
-    elsif data.nil?
-      save_context  :menu
-      respond_with  :message,
-                    text: ObeyBot.vars[:menu],
-                    reply_markup: ObeyBot.menu_keyboard
-    else
-      save_context  :menu
-      respond_with  :message,
-                    text: ObeyBot.vars[:error]
-    end
   end
 
   def settings
@@ -95,7 +81,26 @@ class TelegramWebhookController < Telegram::Bot::UpdatesController
       end
   end
 
+  def menu(data = nil, *)
+    return if @ready == false
+    if data == ObeyBot.vars[:settings]
+      self.settings
+    elsif data == ObeyBot.vars[:program]
+      self.program
+    elsif data.nil?
+      save_context  :menu
+      respond_with  :message,
+                    text: ObeyBot.vars[:menu],
+                    reply_markup: ObeyBot.menu_keyboard
+    else
+      save_context  :menu
+      respond_with  :message,
+                    text: ObeyBot.vars[:error]
+    end
+  end
+
   def show_program(data = nil, *)
+    return if @ready == false
       if current_user.program.trainings.pluck(:name).include? update["message"]["text"]
         session[:current_training_name] = update["message"]["text"]
         self.show_training
@@ -113,6 +118,7 @@ class TelegramWebhookController < Telegram::Bot::UpdatesController
   end
 
   def show_training(data = nil, *)
+    return if @ready == false
       if data == ObeyBot.vars[:back]
           self.show_program
 
@@ -139,7 +145,22 @@ class TelegramWebhookController < Telegram::Bot::UpdatesController
 
   def current_user
     session[:current_user_id] ||= from['id']
-    User.find_by_from_key(session[:current_user_id])
+    User.find_by_from_key( session[:current_user_id] )
   end
+
+private
+  def check_settings
+    if current_user.age.nil?
+      self.age
+      @ready = false
+    elsif current_user.gender.nil?
+      self.gender
+      @ready = false
+    elsif current_user.program.nil?
+      self.skill_level
+      @ready = false
+    end
+  end
+
 
 end
