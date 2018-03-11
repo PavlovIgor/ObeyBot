@@ -239,4 +239,47 @@ RSpec.describe TelegramWebhookController, :telegram_bot do
 
   end
 
+  feature "#menu" do
+    describe "menu command" do
+      let(:program_text) { "Программа для начинающих" }
+
+      subject { -> { dispatch_message '/menu' } }
+      before { dispatch_command :start }
+      before { dispatch_message '100' }
+      before { dispatch_message 'мужской' }
+      before { dispatch_message 'Программа для начинающих' }
+
+      it { should respond_with_message program_text }
+      it { expect(reply[:reply_markup][:keyboard]).to match_array([["Настройки"], ["Программа"]]) }
+    end
+  end
+
+  feature "#settings" do
+    describe "settings command" do
+      let(:age_question) { "Сколько Вам лет?" }
+
+      subject { -> { dispatch_message '/settings' } }
+      before { dispatch_command :start }
+      before { dispatch_message '100' }
+      before { dispatch_message 'мужской' }
+      before { dispatch_message 'Программа для начинающих' }
+
+      it { should respond_with_message age_question }
+    end
+  end
+
+  feature "#program" do
+    describe "program command" do
+      let(:show_program_text){ "\r\nПрограмма для начинающих" }
+
+      subject { -> { dispatch_message '/program' } }
+      before { dispatch_command :start }
+      before { dispatch_message '100' }
+      before { dispatch_message 'мужской' }
+      before { dispatch_message 'Программа для начинающих' }
+
+      it { should respond_with_message show_program_text }
+    end
+  end
+
 end

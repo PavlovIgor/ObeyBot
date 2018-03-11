@@ -10,6 +10,31 @@ class TelegramWebhookController < Telegram::Bot::UpdatesController
       self.age
   end
 
+  def menu(data = nil, *)
+    if data == ObeyBot.vars[:settings]
+      self.settings
+    elsif data == ObeyBot.vars[:program]
+      self.program
+    elsif data.nil?
+      save_context  :menu
+      respond_with  :message,
+                    text: ObeyBot.vars[:menu],
+                    reply_markup: ObeyBot.menu_keyboard
+    else
+      save_context  :menu
+      respond_with  :message,
+                    text: ObeyBot.vars[:error]
+    end
+  end
+
+  def settings
+    self.age
+  end
+
+  def program
+    self.show_program
+  end
+
   def age(age = nil, *)
       if (Integer(age) rescue false)
           ObeyBotFacade.set_age(age, current_user)
@@ -92,14 +117,14 @@ class TelegramWebhookController < Telegram::Bot::UpdatesController
           self.show_program
 
       elsif data == ObeyBot.vars[:done]
-        ObeyBotFacade.training_done(current_user, session[:current_training_name])
-        save_context  :show_training
-        respond_with  :message,
-                      text: ObeyBot.vars[:training_done],
-                      reply_markup: ObeyBot.vars[:remove_keyboard]
-        respond_with  :message,
-                      text: ObeyBot.vars[:return],
-                      reply_markup: ObeyBot.user_training_buttons(current_user, session[:current_training_name])
+          ObeyBotFacade.training_done(current_user, session[:current_training_name])
+          save_context  :show_training
+          respond_with  :message,
+                        text: ObeyBot.vars[:training_done],
+                        reply_markup: ObeyBot.vars[:remove_keyboard]
+          respond_with  :message,
+                        text: ObeyBot.vars[:return],
+                        reply_markup: ObeyBot.user_training_buttons(current_user, session[:current_training_name])
       elsif data.nil?
           save_context  :show_training
           respond_with  :message,

@@ -3,6 +3,9 @@ class ObeyBot
 
   def self.vars
     {
+      menu:                 "Меню",
+      settings:             "Настройки",
+      program:              "Программа",
       man:                  "мужской",
       woman:                "женский",
       low_skill:            "новичок",
@@ -46,8 +49,8 @@ class ObeyBot
     { keyboard: Program.all.collect { |x| [x.name] } }
   end
 
-  def self.user_menu
-    { keyboard: [[self.vars[:user_program]]] }
+  def self.menu_keyboard
+    { keyboard: [[ self.vars[:settings], self.vars[:program] ]] }
   end
 
   def self.user_program_buttons(current_user)
