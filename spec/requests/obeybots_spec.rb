@@ -286,7 +286,7 @@ RSpec.describe TelegramWebhookController, :telegram_bot do
   feature '#before_action' do
     let(:menu) { "Меню" }
 
-    describe "age" do
+    describe "without age" do
       subject { -> { dispatch_message '/menu' } }
       before { dispatch_command :start }
       let(:age_question) { "Сколько Вам лет?" }
@@ -295,7 +295,34 @@ RSpec.describe TelegramWebhookController, :telegram_bot do
       it { should_not respond_with_message menu }
     end
 
-    describe "gender" do
+    describe "without age program" do
+      subject { -> { dispatch_message '/program' } }
+      before { dispatch_command :start }
+      let(:age_question) { "Сколько Вам лет?" }
+
+      it { should respond_with_message age_question }
+      it { should_not respond_with_message menu }
+    end
+
+    describe "without age show program" do
+      subject { -> { dispatch_message '/show_program' } }
+      before { dispatch_command :start }
+      let(:age_question) { "Сколько Вам лет?" }
+
+      it { should respond_with_message age_question }
+      it { should_not respond_with_message menu }
+    end
+
+    describe "without age show training" do
+      subject { -> { dispatch_message '/show_training' } }
+      before { dispatch_command :start }
+      let(:age_question) { "Сколько Вам лет?" }
+
+      it { should respond_with_message age_question }
+      it { should_not respond_with_message menu }
+    end
+
+    describe "without gender" do
       subject { -> { dispatch_message '/menu' } }
       before { dispatch_command :start }
       before { dispatch_message '100' }
@@ -306,8 +333,77 @@ RSpec.describe TelegramWebhookController, :telegram_bot do
       it { should_not respond_with_message menu }
     end
 
-    describe "program" do
+    describe "without gender program" do
+      subject { -> { dispatch_message '/program' } }
+      before { dispatch_command :start }
+      before { dispatch_message '100' }
+      let(:gender_question){ "Теперь укажите Ваш пол." }
+
+      it { should respond_with_message gender_question }
+      it { expect(reply[:reply_markup][:keyboard]).to match_array([["мужской","женский"]]) }
+      it { should_not respond_with_message menu }
+    end
+
+    describe "without gender show program" do
+      subject { -> { dispatch_message '/show_program' } }
+      before { dispatch_command :start }
+      before { dispatch_message '100' }
+      let(:gender_question){ "Теперь укажите Ваш пол." }
+
+      it { should respond_with_message gender_question }
+      it { expect(reply[:reply_markup][:keyboard]).to match_array([["мужской","женский"]]) }
+      it { should_not respond_with_message menu }
+    end
+
+    describe "without gender show training" do
+      subject { -> { dispatch_message '/show_training' } }
+      before { dispatch_command :start }
+      before { dispatch_message '100' }
+      let(:gender_question){ "Теперь укажите Ваш пол." }
+
+      it { should respond_with_message gender_question }
+      it { expect(reply[:reply_markup][:keyboard]).to match_array([["мужской","женский"]]) }
+      it { should_not respond_with_message menu }
+    end
+
+    describe "without program" do
       subject { -> { dispatch_message '/menu' } }
+      before { dispatch_command :start }
+      before { dispatch_message '100' }
+      before { dispatch_message 'мужской' }
+      let(:skills_question){ "Теперь выберем Ваш уровень." }
+
+      it { should respond_with_message skills_question }
+      it { expect(reply[:reply_markup][:keyboard]).to match_array([["Программа для начинающих"]]) }
+      it { should_not respond_with_message menu }
+    end
+
+    describe "without program program" do
+      subject { -> { dispatch_message '/program' } }
+      before { dispatch_command :start }
+      before { dispatch_message '100' }
+      before { dispatch_message 'мужской' }
+      let(:skills_question){ "Теперь выберем Ваш уровень." }
+
+      it { should respond_with_message skills_question }
+      it { expect(reply[:reply_markup][:keyboard]).to match_array([["Программа для начинающих"]]) }
+      it { should_not respond_with_message menu }
+    end
+
+    describe "without program show program" do
+      subject { -> { dispatch_message '/show_program' } }
+      before { dispatch_command :start }
+      before { dispatch_message '100' }
+      before { dispatch_message 'мужской' }
+      let(:skills_question){ "Теперь выберем Ваш уровень." }
+
+      it { should respond_with_message skills_question }
+      it { expect(reply[:reply_markup][:keyboard]).to match_array([["Программа для начинающих"]]) }
+      it { should_not respond_with_message menu }
+    end
+
+    describe "without program show training" do
+      subject { -> { dispatch_message '/show_training' } }
       before { dispatch_command :start }
       before { dispatch_message '100' }
       before { dispatch_message 'мужской' }

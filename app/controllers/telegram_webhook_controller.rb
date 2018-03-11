@@ -4,7 +4,7 @@ class TelegramWebhookController < Telegram::Bot::UpdatesController
   use_session!
 
   before_action :check_settings,
-                only: [:menu, :show_program, :show_training]
+                only: [:menu, :program, :show_program, :show_training]
 
   def start(*)
       ObeyBotFacade.start(from, current_user)
