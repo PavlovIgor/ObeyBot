@@ -21,7 +21,7 @@ class TelegramWebhookController < Telegram::Bot::UpdatesController
     self.show_program
   end
 
-  def message
+  def message(message)
     self.menu
   end
 
