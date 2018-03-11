@@ -1,4 +1,5 @@
 ActiveAdmin.register Completed do
+  self.table_name = 'completed'
   permit_params :user, :training
 
   index do
