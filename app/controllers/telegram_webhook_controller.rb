@@ -143,12 +143,12 @@ class TelegramWebhookController < Telegram::Bot::UpdatesController
     end
   end
 
+private
   def current_user
     session[:current_user_id] ||= from['id']
     User.find_by_from_key( session[:current_user_id] )
   end
 
-private
   def check_settings
     if current_user.age.nil?
       self.age
