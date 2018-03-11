@@ -14,6 +14,6 @@ Up dev environment:
 
 6 - Seed - docker-compose exec webapp rake db:seed
 
-7 - Set the app variables to config/apllication.yml ( APP_NAME, APP_HOST, TELEGRAM_BOT_NAME, TELEGRAM_BOT_LINK, TELEGRAM_BOT_KEY, SECRET_KEY_BASE, DEVISE_SECRET_KEY)
+7 - Set app variables to config/apllication.yml ( APP_NAME, APP_HOST, TELEGRAM_BOT_NAME, TELEGRAM_BOT_LINK, TELEGRAM_BOT_KEY, SECRET_KEY_BASE, DEVISE_SECRET_KEY)
 
 8 - Home page: localhost:3000, Admin page: localhost:3000/admin (admin@example.com, password), Bot link: https://t.me/ObeyBot

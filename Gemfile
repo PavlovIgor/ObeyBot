@@ -16,7 +16,7 @@ gem "figaro", '1.1.1'
 # gem 'therubyracer', platforms: :ruby
 
 gem 'devise', '4.3.0'
-gem 'activeadmin', '2.0.0', github: 'activeadmin'
+gem 'activeadmin', github: 'activeadmin'
 gem 'active_admin_flat_skin', '0.1.2'
 
 gem 'jquery-rails', '~> 4.3.1'

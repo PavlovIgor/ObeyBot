@@ -36,8 +36,14 @@ class ObeyBot
   end
 
   def self.user_training_text(current_user, data)
-    data + "\r\n\r\nОписание\r\n\r\n" + current_user.program.trainings.find_by_name(data).description
+    completed = Completed.where(  user: current_user,
+                                  training: current_user.program.trainings.find_by_name(training_name)
+    data +
+    "\r\n\r\nОписание\r\n\r\n" +
+    current_user.program.trainings.find_by_name(data).description +
+    completed ? "\r\n\r\nВыполенено " + completed.created_at : ""
   end
+
 
 
   def self.gender_keyboard
