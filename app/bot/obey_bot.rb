@@ -49,7 +49,7 @@ class ObeyBot
   end
 
   def self.menu_keyboard
-    { keyboard: [ [ self.vars[:settings]], [self.vars[:program]] ] }
+    { keyboard: [ [self.vars[:settings]], [self.vars[:program]] ] }
   end
 
   def self.user_program_buttons(current_user)
