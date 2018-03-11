@@ -12,7 +12,7 @@ gem 'puma', '~> 3.7'
 gem 'turbolinks', '~> 5'
 gem 'jbuilder', '~> 2.5'
 gem 'redis', '~> 3.0'
-gem "figaro", ''1.1.1
+gem "figaro", '1.1.1'
 # gem 'therubyracer', platforms: :ruby
 
 gem 'devise', '4.3.0'
