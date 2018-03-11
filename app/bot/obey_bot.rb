@@ -55,7 +55,9 @@ class ObeyBot
   end
 
   def self.user_training_buttons(current_user, training_name)
-    if Completed.where(user: current_user, training: current_user.program.trainings.find_by_name(training_name))
+    if Completed.where( user: current_user,
+                        training: current_user.program.trainings.find_by_name(training_name)
+    ).present?
       { keyboard: [ [self.vars[:back]] ] }
     else
       { keyboard: [ [self.vars[:done]], [self.vars[:back]] ] }

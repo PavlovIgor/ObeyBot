@@ -1,1 +1,1 @@
-o: ActiveSupport::Cache::Entry:@value{I"current_user_id:EFi{I"current_training_name;FI"Тренировка №1;TI"context;F:show_training:@created_atf1520728286.0570507:@expires_in0
+o: ActiveSupport::Cache::Entry:@value{I"current_user_id:EFi{I"current_training_name;FI"Тренировка №1;TI"context;F:show_training:@created_atf1520728630.0511577:@expires_in0
