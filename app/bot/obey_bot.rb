@@ -12,7 +12,7 @@ class ObeyBot
       back:                 "Назад",
       show_program:         "/show_program",
       error:                "Неверный формат. Повторите попытку.",
-      age_question:         "Сколько тебе лет?",
+      age_question:         "Сколько Вам лет?",
       age_answer:           "Отлично!",
       gender_question:      "Теперь укажите Ваш пол.",
       gender_answer:        "Отлично!",

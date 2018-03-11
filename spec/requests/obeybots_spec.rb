@@ -24,7 +24,7 @@ RSpec.describe TelegramWebhookController, :telegram_bot do
 
   feature '#start' do
     let(:welcome_text) { "\r\nРаскажите немного о себе." }
-    let(:age_question) { "Сколько тебе лет?" }
+    let(:age_question) { "Сколько Вам лет?" }
 
     subject { -> { dispatch_command :start } }
 
@@ -75,7 +75,7 @@ RSpec.describe TelegramWebhookController, :telegram_bot do
     let(:success_text){ 'Отлично!' }
     let(:gender_text){ "Теперь укажите Ваш пол." }
     let(:error_text){ 'Неверный формат. Повторите попытку.' }
-    let(:age_question) { "Сколько тебе лет?" }
+    let(:age_question) { "Сколько Вам лет?" }
 
     describe "user send number his age after start" do
       subject { -> { dispatch_message '100' } }
