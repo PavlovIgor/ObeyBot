@@ -8,15 +8,6 @@ services:
     ports:
       - '6379:6379'
 
-  node:
-    image: "node:8"
-    environment:
-      - NODE_ENV=production
-    volumes:
-      - ./:/usr/src/app
-    expose:
-      - "8080"
-
   webapp:
     build: .
     tty: true
@@ -28,4 +19,3 @@ services:
     depends_on:
       - db
       - redis
-      - node

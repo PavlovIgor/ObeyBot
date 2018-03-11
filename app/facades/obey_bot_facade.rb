@@ -19,7 +19,8 @@ class ObeyBotFacade
   end
 
   def self.training_done(current_user, training_name)
-    Completed.create(user: current_user, training: current_user.program.trainings.find_by_name(training_name))
+    Completed.create( user:     current_user,
+                      training: current_user.program.trainings.find_by_name(training_name))
   end
 
 end
