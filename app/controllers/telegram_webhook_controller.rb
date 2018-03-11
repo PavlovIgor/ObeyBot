@@ -21,6 +21,10 @@ class TelegramWebhookController < Telegram::Bot::UpdatesController
     self.show_program
   end
 
+  def message
+    self.menu
+  end
+
   def age(age = nil, *)
       if (Integer(age) rescue false)
           ObeyBotFacade.set_age(age, current_user)
