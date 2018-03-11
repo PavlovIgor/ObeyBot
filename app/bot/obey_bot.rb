@@ -8,6 +8,8 @@ class ObeyBot
       low_skill:            "новичок",
       medium_skill:         "продолжающий",
       high_skill:           "продвинутый",
+      done:                 "Выполнил",
+      back:                 "Назад",
       show_program:         "/show_program",
       error:                "Неверный формат. Повторите попытку.",
       age_question:         "Сколько тебе лет?",
@@ -27,14 +29,12 @@ class ObeyBot
     "Привет #{responce_appeal(data)}!\r\nРаскажите немного о себе."
   end
 
-  def self.user_program_text(from_key)
-    user = TelegramWebhookControllerHelper::current_user(from_key)
-    "\r\n" + user.program.name
+  def self.user_program_text(current_user)
+    "\r\n" + current_user.program.name
   end
 
-  def self.user_training_text(from_key, data)
-    user = TelegramWebhookControllerHelper::current_user(from_key)
-    data + "\r\n\r\nОписание\r\n\r\n" + user.program.trainings.find_by_name(data).description
+  def self.user_training_text(current_user, data)
+    data + "\r\n\r\nОписание\r\n\r\n" + current_user.program.trainings.find_by_name(data).description
   end
 
 
@@ -50,27 +50,25 @@ class ObeyBot
     { keyboard: [[self.vars[:user_program]]] }
   end
 
-  def self.user_program_buttons(from_key)
-    user = TelegramWebhookControllerHelper::current_user(from_key)
-    { keyboard: user.program.trainings.collect { |x| [x.name] } }
+  def self.user_program_buttons(current_user)
+    { keyboard: current_user.program.trainings.collect { |x| [x.name] } }
   end
 
-  def self.user_training_buttons(from_key, data)
-    user = TelegramWebhookControllerHelper::current_user(from_key)
-    TrainingButtonAdapter.adapt(user.program.trainings.find_by_name(data))
+  def self.user_training_buttons(current_user, training_name)
+    if Completed.where(user: current_user, training: current_user.program.trainings.find_by_name(training_name))
+      { keyboard: [ [self.vars[:back]] ] }
+    else
+      { keyboard: [ [self.vars[:done]], [self.vars[:back]] ] }
+    end
   end
 
 private
 
   def self.responce_appeal(data)
-      if data['first_name'].present? &&
-      data['last_name'].present?
+      if data['first_name'].present? && data['last_name'].present?
           data['first_name'] + ' ' + data['last_name']
-
-      elsif data.key?("username") &&
-      data['username'].present?
+      elsif data['username'].present?
           data['username']
-
       else
           'stranger'
       end

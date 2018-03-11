@@ -5,6 +5,13 @@ RSpec.describe TelegramWebhookController, :telegram_bot do
     bot.requests[:sendMessage].last
   end
 
+  before { @program = FactoryGirl.create(:program) }
+  before do
+    (1..3).each_with_index do |i|
+      FactoryGirl.create(:training, name: 'Тренировка №'+i.to_s, queue: i, program: @program)
+    end
+  end
+
   let(:first_name) { "Igor" }
   let(:last_name) { "Pavlov" }
   let(:username) { "username" }
@@ -142,7 +149,7 @@ RSpec.describe TelegramWebhookController, :telegram_bot do
       it '' do
         should respond_with_message program_with_list
         expect(reply[:reply_markup]).to be_present
-        expect(reply[:reply_markup][:keyboard]).to match_array([["Занятие №1"], ["Занятие №2"], ["Занятие №3"]])
+        expect(reply[:reply_markup][:keyboard]).to match_array([["Тренировка №1"], ["Тренировка №2"], ["Тренировка №3"]])
       end
     end
 
@@ -169,7 +176,7 @@ RSpec.describe TelegramWebhookController, :telegram_bot do
       it { should respond_with_message show_program_text }
       it '' do
         expect(reply[:reply_markup]).to be_present
-        expect(reply[:reply_markup][:keyboard]).to match_array([["Занятие №1"], ["Занятие №2"], ["Занятие №3"]])
+        expect(reply[:reply_markup][:keyboard]).to match_array([["Тренировка №1"], ["Тренировка №2"], ["Тренировка №3"]])
       end
     end
 
@@ -209,7 +216,7 @@ RSpec.describe TelegramWebhookController, :telegram_bot do
       end
       it '' do
         expect(reply[:reply_markup]).to be_present
-        # expect(reply[:reply_markup][:keyboard]).to match_array([["Занятие №1"], ["Занятие №2"], ["Занятие №3"]])
+        # expect(reply[:reply_markup][:keyboard]).to match_array([["Тренировка №1"], ["Тренировка №2"], ["Тренировка №3"]])
       end
     end
 

@@ -4,7 +4,7 @@ class TelegramWebhookController < Telegram::Bot::UpdatesController
   use_session!
 
   def start(*)
-      ObeyBotFacade.new_user(from)
+      ObeyBotFacade.start(from, current_user)
       respond_with  :message,
                     text: ObeyBot.say_welcome(from)
       self.age
@@ -12,7 +12,7 @@ class TelegramWebhookController < Telegram::Bot::UpdatesController
 
   def age(age = nil, *)
       if (Integer(age) rescue false)
-          ObeyBotFacade.set_age(age, from['id'])
+          ObeyBotFacade.set_age(age, current_user)
           respond_with  :message,
                         text: ObeyBot.vars[:age_answer]
           self.gender
@@ -31,7 +31,7 @@ class TelegramWebhookController < Telegram::Bot::UpdatesController
       if [  ObeyBot.vars[:man],
             ObeyBot.vars[:woman]
       ].include? data
-          ObeyBotFacade.set_gender(data, from['id'])
+          ObeyBotFacade.set_gender(data, current_user)
           respond_with  :message,
                         text: ObeyBot.vars[:gender_answer],
                         reply_markup: ObeyBot.vars[:remove_keyboard]
@@ -51,7 +51,7 @@ class TelegramWebhookController < Telegram::Bot::UpdatesController
 
   def skill_level(data = nil, *)
       if Program.all.pluck(:name).include? update["message"]["text"]
-          ObeyBotFacade.set_skill_level(update["message"]["text"], from['id'])
+          ObeyBotFacade.set_skill_level(update["message"]["text"], current_user)
           respond_with  :message,
                         text: ObeyBot.vars[:skill_level_answer],
                         reply_markup: ObeyBot.vars[:remove_keyboard]
@@ -71,15 +71,15 @@ class TelegramWebhookController < Telegram::Bot::UpdatesController
   end
 
   def show_program(data = nil, *)
-      p self.current
-      if self.current.program.trainings.pluck(:name).include? update["message"]["text"]
-          self.show_training
+      if current_user.program.trainings.pluck(:name).include? update["message"]["text"]
+        session[:current_training_name] = update["message"]["text"]
+        self.show_training
 
       elsif data.nil?
           save_context  :show_program
           respond_with  :message,
-                        text: ObeyBot.user_program_text(from['id']),
-                        reply_markup: ObeyBot.user_program_buttons(from['id'])
+                        text: ObeyBot.user_program_text(current_user),
+                        reply_markup: ObeyBot.user_program_buttons(current_user)
       else
           save_context  :show_program
           respond_with  :message,
@@ -88,22 +88,23 @@ class TelegramWebhookController < Telegram::Bot::UpdatesController
   end
 
   def show_training(data = nil, *)
-      if data == "Назад"
+      if data == ObeyBot.vars[:back]
           self.show_program
 
-      elsif data == "Выполнил"
-          save_context  :show_training
-          respond_with  :message,
-                        text: ObeyBot.vars[:training_done],
-                        reply_markup: ObeyBot.vars[:remove_keyboard]
-          respond_with  :message,
-                        text: ObeyBot.vars[:return],
-                        reply_markup: ObeyBot.user_training_buttons(from['id'], data)
+      elsif data == ObeyBot.vars[:done]
+        ObeyBotFacade.training_done(current_user, session[:current_training_name])
+        save_context  :show_training
+        respond_with  :message,
+                      text: ObeyBot.vars[:training_done],
+                      reply_markup: ObeyBot.vars[:remove_keyboard]
+        respond_with  :message,
+                      text: ObeyBot.vars[:return],
+                      reply_markup: ObeyBot.user_training_buttons(current_user, session[:current_training_name])
       elsif data.nil?
           save_context  :show_training
           respond_with  :message,
-                        text: ObeyBot.user_training_text(from['id'], update["message"]["text"]),
-                        reply_markup: ObeyBot.user_training_buttons(from['id'], data)
+                        text: ObeyBot.user_training_text(current_user, update["message"]["text"]),
+                        reply_markup: ObeyBot.user_training_buttons(current_user, session[:current_training_name])
       else
           save_context  :show_training
           respond_with  :message,
@@ -111,7 +112,7 @@ class TelegramWebhookController < Telegram::Bot::UpdatesController
     end
   end
 
-  def current
+  def current_user
     session[:current_user_id] ||= from['id']
     User.find_by_from_key(session[:current_user_id])
   end
