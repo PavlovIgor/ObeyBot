@@ -1,4 +1,4 @@
-ActiveAdmin.register Completed do
+ActiveAdmin.register Completeds do
   permit_params :user, :training
 
   index do
