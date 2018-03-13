@@ -1,4 +1,6 @@
 App link: https://obeybot.herokuapp.com/
+Admin path: https://obeybot.herokuapp.com/admin (login: admin@example.com, pass: password)
+Bot link: https://t.me/ObeyBot
 
 Up dev environment:
 
